@@ -1,0 +1,17 @@
+apiVersion: "nais.io/v1"
+kind: "Alert"
+metadata:
+  name: skjemabygging-proxy-alerts
+  namespace: skjemadigitalisering
+  labels:
+    team: skjemadigitalisering
+spec:
+  receivers:
+    slack:
+      channel: '#org_preprod_alerts'
+  alerts:
+    - alert: SKJEMABYGGING-PROXY applikasjon nede
+      expr: kube_deployment_status_replicas_unavailable{deployment="skjemabygging-proxy"} > 0
+      for: 3m
+      description: "{{ $labels.app }} er nede"
+      action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -c {{ $labels.app }}` for logger"

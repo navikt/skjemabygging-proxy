@@ -1,0 +1,19 @@
+name: skjemabygging-proxy
+ingresses:
+  - https://skjemabygging-proxy.intern.nav.no
+  - https://skjemabygging-proxy.prod-fss-pub.nais.io
+env:
+  - name: NORG2_TARGET_URL
+    value: https://norg2.nais.adeo.no/norg2
+azure:
+  application:
+    tenant: nav.no
+accessPolicy:
+  inbound:
+    rules:
+      - application: fyllut
+        namespace: skjemadigitalisering
+        cluster: prod-fss
+  outbound:
+    external:
+      - host: norg2.nais.adeo.no

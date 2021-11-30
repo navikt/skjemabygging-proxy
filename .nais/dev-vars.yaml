@@ -1,0 +1,31 @@
+name: skjemabygging-proxy
+ingresses:
+  - https://skjemabygging-proxy.dev.intern.nav.no
+  - https://skjemabygging-proxy.dev-fss-pub.nais.io
+env:
+  - name: NORG2_TARGET_URL
+    value: https://norg2.dev.adeo.no/norg2
+azure:
+  application:
+    tenant: nav.no
+accessPolicy:
+  inbound:
+    rules:
+      - application: skjemautfylling
+        namespace: skjemadigitalisering
+        cluster: labs-gcp
+      - application: skjemautfylling
+        namespace: skjemadigitalisering
+        cluster: dev-gcp
+      - application: skjemabygging-formio
+        namespace: skjemadigitalisering
+        cluster: labs-gcp
+     - application: skjemabygging-formio
+       namespace: skjemadigitalisering
+       cluster: dev-gcp
+     - application: skjemautfylling-forhandsvisning
+       namespace: skjemadigitalisering
+       cluster: labs-gcp
+  outbound:
+    external:
+      - host: norg2.dev.adeo.no
