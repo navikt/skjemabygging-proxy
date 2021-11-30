@@ -7,7 +7,7 @@ env:
     value: https://norg2.dev.adeo.no/norg2
 azure:
   application:
-    tenant: nav.no
+    tenant: trygdeetaten.no
 accessPolicy:
   inbound:
     rules:
@@ -17,9 +17,6 @@ accessPolicy:
       - application: skjemautfylling
         namespace: skjemadigitalisering
         cluster: dev-gcp
-      - application: skjemabygging-formio
-        namespace: skjemadigitalisering
-        cluster: labs-gcp
      - application: skjemabygging-formio
        namespace: skjemadigitalisering
        cluster: dev-gcp
