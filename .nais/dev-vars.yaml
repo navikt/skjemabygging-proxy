@@ -16,12 +16,12 @@ accessPolicy:
       - application: skjemautfylling
         namespace: skjemadigitalisering
         cluster: dev-gcp
-     - application: skjemabygging-formio
-       namespace: skjemadigitalisering
-       cluster: dev-gcp
-     - application: skjemautfylling-forhandsvisning
-       namespace: skjemadigitalisering
-       cluster: labs-gcp
+      - application: skjemabygging-formio
+        namespace: skjemadigitalisering
+        cluster: dev-gcp
+      - application: skjemautfylling-forhandsvisning
+        namespace: skjemadigitalisering
+        cluster: labs-gcp
   outbound:
     external:
       - host: norg2.dev.adeo.no
