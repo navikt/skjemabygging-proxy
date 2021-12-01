@@ -57,3 +57,5 @@ spec:
       - name: {{this.name}}
         value: {{this.value}}
   {{/each}}
+  # allow calls to azuread for verification of jwt token
+  webproxy: true
