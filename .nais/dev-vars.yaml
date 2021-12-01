@@ -25,3 +25,4 @@ accessPolicy:
   outbound:
     external:
       - host: norg2.intern.dev.adeo.no
+      - host: login.microsoftonline.com
