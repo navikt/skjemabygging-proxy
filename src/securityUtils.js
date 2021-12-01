@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
+const {HttpsProxyAgent} = require("https-proxy-agent");
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -36,7 +37,8 @@ function authenticateToken(req, res, next) {
 
 
 var client = jwksClient({
-    jwksUri: process.env.AZURE_OPENID_CONFIG_JWKS_URI
+    jwksUri: process.env.AZURE_OPENID_CONFIG_JWKS_URI,
+    requestAgent: new HttpsProxyAgent(process.env.HTTPS_PROXY),
 });
 
 function getKey(header, callback) {
