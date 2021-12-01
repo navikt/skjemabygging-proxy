@@ -20,7 +20,8 @@ function authenticateToken(req, res, next) {
         audience: process.env.AZURE_APP_CLIENT_ID,
         issuer: process.env.AZURE_OPENID_CONFIG_ISSUER
     }, function(err, decoded) {
-        if(err){
+        if (err) {
+            console.log("jwt verify failed:", err);
             return res.status(401).send({
                 "timestamp": Date.now(),
                 "status": 401,
@@ -38,10 +39,14 @@ var client = jwksClient({
     jwksUri: process.env.AZURE_OPENID_CONFIG_JWKS_URI
 });
 
-function getKey(header, callback){
+function getKey(header, callback) {
     client.getSigningKey(header.kid, function(err, key) {
-        var signingKey = key.publicKey || key.rsaPublicKey;
-        callback(null, signingKey);
+        if (err) {
+            callback(err);
+        } else {
+            var signingKey = key.publicKey || key.rsaPublicKey;
+            callback(null, signingKey);
+        }
     });
 }
 
