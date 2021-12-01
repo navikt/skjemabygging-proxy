@@ -16,8 +16,3 @@ accessPolicy:
       - application: skjemabygging-formio
         namespace: skjemadigitalisering
         cluster: labs-gcp
-  outbound:
-    external:
-      - host: norg2.nais.adeo.no
-      - host: login.microsoftonline.com
-      - host: graph.microsoft.com

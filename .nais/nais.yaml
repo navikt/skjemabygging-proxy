@@ -22,9 +22,8 @@ spec:
         {{/each}}
     outbound:
       external:
-        {{#each accessPolicy.outbound.external}}
-          - host: {{this.host}}
-        {{/each}}
+        - host: login.microsoftonline.com
+        - host: graph.microsoft.com
   ingresses:
   {{#each ingresses as |url|}}
     - {{url}}
