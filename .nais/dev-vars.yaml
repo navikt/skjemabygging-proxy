@@ -24,4 +24,4 @@ accessPolicy:
         cluster: labs-gcp
   outbound:
     external:
-      - host: norg2.dev.adeo.no
+      - host: norg2.intern.dev.adeo.no
