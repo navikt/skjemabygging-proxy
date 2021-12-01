@@ -1,9 +1,8 @@
-name: skjemabygging-proxy
 ingresses:
   - https://skjemabygging-proxy.dev.intern.nav.no
   - https://skjemabygging-proxy.dev-fss-pub.nais.io
 env:
-  - name: NORG2_TARGET_URL
+  - name: NORG2_BASE_URL
     value: https://norg2.dev.adeo.no/norg2
 azure:
   application:

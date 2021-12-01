@@ -1,0 +1,54 @@
+name: Skjemabygging-proxy application
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'dev/*'
+
+env:
+  IMAGE: docker.pkg.github.com/${{ github.repository }}/skjemabygging-proxy:${{ github.sha }}
+
+jobs:
+  build:
+    name: Build and push docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - uses: actions/cache@v1
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-cache-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-cache-
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+      # - name: Test
+      #  run: |
+      #    yarn test
+      - name: Build tag and push Docker image
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/dev')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker build --tag ${IMAGE} .
+          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
+          docker push ${IMAGE}
+
+  deploy-dev:
+    name: Deploy dev-fss
+    needs: build
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/dev')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-fss
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev-vars.yaml

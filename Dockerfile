@@ -1,9 +1,9 @@
 FROM navikt/node-express:14-alpine
 
 COPY package.json ./
-COPY package-lock.json ./
+COPY yarn.lock ./
 
-RUN npm ci
+RUN yarn install --frozen-lockfile
 COPY src/ src/
 COPY .env .env
 
