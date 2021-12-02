@@ -8,7 +8,7 @@ metadata:
 spec:
   receivers:
     slack:
-      channel: '#org_preprod_alerts'
+      channel: '#skjemautfylling-feil-prod'
   alerts:
     - alert: SKJEMABYGGING-PROXY applikasjon nede
       expr: kube_deployment_status_replicas_unavailable{deployment="skjemabygging-proxy"} > 0
