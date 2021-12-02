@@ -8,9 +8,6 @@ function setupProxy(app) {
         target: process.env.NORG2_TARGET_URL,
         changeOrigin: true,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
-        pathRewrite: {
-            [`^/norg2`]: ''
-        }
     }));
 }
 

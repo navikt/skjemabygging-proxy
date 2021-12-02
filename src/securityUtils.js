@@ -35,10 +35,14 @@ function authenticateToken(req, res, next) {
     });
 }
 
+let httpsProxy;
+if (process.env.HTTPS_PROXY) {
+    httpsProxy = new HttpsProxyAgent(process.env.HTTPS_PROXY);
+}
 
 var client = jwksClient({
     jwksUri: process.env.AZURE_OPENID_CONFIG_JWKS_URI,
-    requestAgent: new HttpsProxyAgent(process.env.HTTPS_PROXY),
+    requestAgent: httpsProxy,
 });
 
 function getKey(header, callback) {

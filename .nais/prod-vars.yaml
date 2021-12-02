@@ -3,7 +3,7 @@ ingresses:
   - https://skjemabygging-proxy.prod-fss-pub.nais.io
 env:
   - name: NORG2_BASE_URL
-    value: https://norg2.nais.adeo.no/norg2
+    value: https://norg2.nais.adeo.no
 azure:
   application:
     tenant: nav.no
