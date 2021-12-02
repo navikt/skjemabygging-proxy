@@ -15,4 +15,4 @@ spec:
       expr: kube_deployment_status_replicas_available{deployment="skjemabygging-proxy"} == 0
       for: 1m
       description: "{{ $labels.deployment }} er nede"
-      action: "`k get pods --namespace {{ $labels.namespace }}`"
+      action: "`kubectl get pods --namespace {{ $labels.namespace }}`"
