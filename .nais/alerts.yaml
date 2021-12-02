@@ -11,7 +11,7 @@ spec:
       channel: '#skjemautfylling-feil-prod'
   alerts:
     - alert: SKJEMABYGGING-PROXY applikasjon nede
-      expr: kube_deployment_status_replicas_unavailable{deployment="skjemabygging-proxy"} > 0
-      for: 3m
+      expr: kube_deployment_status_replicas_available{deployment="skjemabygging-proxy"} == 0
+      for: 1m
       description: "{{ $labels.app }} er nede"
       action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -c {{ $labels.app }}` for logger"
