@@ -9,9 +9,10 @@ spec:
   receivers:
     slack:
       channel: '#skjemautfylling-feil-prod'
+      prependText: '<!here> | ' # this text will be prepended to the Slack alert title
   alerts:
-    - alert: SKJEMABYGGING-PROXY applikasjon nede
+    - alert: skjemabygging-proxy nede
       expr: kube_deployment_status_replicas_available{deployment="skjemabygging-proxy"} == 0
       for: 1m
-      description: "{{ $labels.app }} er nede"
-      action: "`kubectl describe pod {{ $labels.kubernetes_pod_name }}` for events, og `kubectl logs {{ $labels.kubernetes_pod_name }} -c {{ $labels.app }}` for logger"
+      description: "{{ $labels.deployment }} er nede"
+      action: "`k get pods --namespace {{ $labels.namespace }}`"
