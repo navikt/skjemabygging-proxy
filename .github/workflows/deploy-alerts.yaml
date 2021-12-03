@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - '.nais/alerts.yaml'
+      - '.github/workflows/deploy-alerts.yaml'
 
 jobs:
   apply-alerts:
