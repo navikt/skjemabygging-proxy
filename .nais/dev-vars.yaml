@@ -12,13 +12,7 @@ accessPolicy:
     rules:
       - application: skjemautfylling
         namespace: skjemadigitalisering
-        cluster: labs-gcp
-      - application: skjemautfylling
-        namespace: skjemadigitalisering
         cluster: dev-gcp
       - application: skjemabygging-formio
         namespace: skjemadigitalisering
         cluster: dev-gcp
-      - application: skjemautfylling-forhandsvisning
-        namespace: skjemadigitalisering
-        cluster: labs-gcp
