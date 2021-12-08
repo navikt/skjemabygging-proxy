@@ -10,9 +10,9 @@ azure:
 accessPolicy:
   inbound:
     rules:
-      - application: fyllut
+      - application: skjemautfylling
         namespace: skjemadigitalisering
-        cluster: prod-fss
+        cluster: prod-gcp
       - application: skjemabygging-formio
         namespace: skjemadigitalisering
         cluster: labs-gcp
