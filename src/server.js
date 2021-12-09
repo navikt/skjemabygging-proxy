@@ -11,7 +11,6 @@ const app = express();
 
 // Logging
 app.use(morgan((token, req, res) => {
-
     var logEntry =  JSON.parse(ecsFormat({ apmIntegration: false })(token, req, res));
     delete logEntry.http;
     delete logEntry.url;
