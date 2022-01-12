@@ -31,6 +31,12 @@ const getStsToken = async () => {
     return stsToken;
 }
 
+// for testing
+const clearStsToken = () => {
+    stsToken = undefined;
+}
+
 module.exports = {
-    getStsToken
+    getStsToken,
+    clearStsToken
 };
