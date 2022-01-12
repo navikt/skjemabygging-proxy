@@ -1,6 +1,7 @@
 # skjemabygging-proxy
 
-skjemabygging-proxy er en applikasjon bygget med nodejs/express med hensikt av å gi skjemabygging-appene tilgang til norg2.
+skjemabygging-proxy er en applikasjon bygget med nodejs/express med hensikt av å gi skjemabygging-appene tilgang til å
+kalle systemer som kjører i fagsystemsonen, f.eks. norg2 eller foerstesidegeneratoren.
 
 ## Funksjonalitet
 applikasjonen eksponerer et endepunkt på /norg2 som ruter alle kall videre til norg2.
@@ -11,9 +12,12 @@ Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da til
 appen stiller krav til at følgende variabler er tilgjengelig (verdier hentet fra dev-miljø):
 
     NORG2_BASE_URL=https://norg2.dev.intern.nav.no
+    FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator.dev.intern.nav.no
     AZURE_OPENID_CONFIG_JWKS_URI=<jwks url>
     AZURE_OPENID_CONFIG_ISSUER=<issuer url>
-    AZURE_APP_CLIENT_ID=<app clientID>
+    AZURE_APP_CLIENT_ID=<proxy app clientID>
+    STS_TOKEN_URL=<sts token url>
+    STS_TOKEN_API_KEY=<sts api key>
 
 JWKS_URI og ISSUER kan hentes fra https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration,
 og CLIENT_ID for proxy finnes slik: https://security.labs.nais.io/pages/idp/azure-ad.html#hvordan-finne-clientid-for-applikasjoner
