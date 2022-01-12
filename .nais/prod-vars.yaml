@@ -8,6 +8,8 @@ env:
     value: https://foerstesidegenerator.intern.nav.no
   - name: STS_TOKEN_URL
     value: https://security-token-service.nais.adeo.no
+  - name: SERVICEUSER_USERNAME
+    value: srvsoknadsveiviser
 azure:
   application:
     tenant: nav.no
