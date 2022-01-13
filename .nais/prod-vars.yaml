@@ -7,7 +7,7 @@ env:
   - name: FOERSTESIDEGENERATOR_BASE_URL
     value: https://foerstesidegenerator.intern.nav.no
   - name: STS_TOKEN_URL
-    value: https://security-token-service.nais.adeo.no
+    value: http://security-token-service.default.svc.nais.local/rest/v1/sts/token
   - name: SERVICEUSER_USERNAME
     value: srvsoknadsveiviser
 azure:
