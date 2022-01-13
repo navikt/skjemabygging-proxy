@@ -1526,11 +1526,6 @@ expect@^27.4.1:
     jest-message-util "^27.4.1"
     jest-regex-util "^27.4.0"
 
-express-async-handler@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/express-async-handler/-/express-async-handler-1.2.0.tgz#ffc9896061d90f8d2e71a2d2b8668db5b0934391"
-  integrity sha512-rCSVtPXRmQSW8rmik/AIb2P0op6l7r1fMW538yyvTMltCO4xQEWMmobfrIxN2V1/mVrgxB8Az3reYF6yUZw37w==
-
 express-prom-bundle@^6.4.1:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/express-prom-bundle/-/express-prom-bundle-6.4.1.tgz#a688050b9e090f6969825c33143106d3e0e5a70e"

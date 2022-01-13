@@ -2,6 +2,8 @@ const axios = require("axios");
 const config = require("../config");
 const jwt = require("jsonwebtoken");
 
+const HEADER_STS_TOKEN = "StsToken";
+
 const fetchStsToken = async () => {
     const response = await axios.get(config.stsTokenUrl + "?grant_type=client_credentials&scope=openid", {
         headers: { "x-nav-apiKey": config.stsTokenApiKey },
@@ -31,12 +33,19 @@ const getStsToken = async () => {
     return stsToken;
 }
 
+const stsTokenHandler = async (req, res, next) => {
+    req.headers[HEADER_STS_TOKEN] = await getStsToken();
+    next();
+}
+
 // for testing
 const clearStsToken = () => {
     stsToken = undefined;
 }
 
 module.exports = {
+    clearStsToken,
     getStsToken,
-    clearStsToken
+    stsTokenHandler,
+    HEADER_STS_TOKEN
 };
