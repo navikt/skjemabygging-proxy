@@ -2,16 +2,18 @@ const express = require('express');
 const morgan = require("morgan");
 const promBundle = require("express-prom-bundle");
 const ecsFormat = require('@elastic/ecs-morgan-format')
+const correlator = require('express-correlation-id');
 const actuators = require('./actuators.js')
 const proxyApi = require('./proxyApi.js')
 
-
 // Create Express Server
 const app = express();
+app.use(correlator());
 
 // Logging
 app.use(morgan((token, req, res) => {
-    var logEntry =  JSON.parse(ecsFormat({ apmIntegration: false })(token, req, res));
+    const logEntry = JSON.parse(ecsFormat({ apmIntegration: false })(token, req, res));
+    logEntry.correlation_id = correlator.getId();
     delete logEntry.http;
     delete logEntry.url;
     delete logEntry.client;
@@ -39,5 +41,13 @@ app.use(metricsMiddleware)
 
 proxyApi.setupProxy(app);
 actuators.setupAcuators(app);
+
+app.use(async (err, req, res, next) => {
+    const correlation_id = correlator.getId();
+    console.error(JSON.stringify({message: err.message, level: "Error", correlation_id}));
+    res.status(500);
+    res.contentType("application/json");
+    res.send({ message: err.message, correlation_id });
+});
 
 module.exports = app;

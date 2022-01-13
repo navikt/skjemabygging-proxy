@@ -1,17 +1,40 @@
 const axios = require("axios");
-const config = require("../config");
 const jwt = require("jsonwebtoken");
+const correlator = require('express-correlation-id');
+const config = require("../config");
 
 const HEADER_STS_TOKEN = "StsToken";
+const URL = config.stsTokenUrl + "?grant_type=client_credentials&scope=openid";
+
+const logError = logObject => {
+    const correlationId = correlator.getId();
+    console.log(JSON.stringify({
+        ...logObject,
+        url: URL,
+        correlation_id: correlationId
+    }));
+};
 
 const fetchStsToken = async () => {
-    const response = await axios.get(config.stsTokenUrl + "?grant_type=client_credentials&scope=openid", {
+    const response = await axios.get(URL, {
         headers: { "x-nav-apiKey": config.stsTokenApiKey },
         auth: {
             username: config.serviceUserUsername,
             password: config.serviceUserPassword,
         },
         method: "GET",
+    }).catch(err => {
+        if (err.response) {
+            logError({
+                responseData: err.response.data,
+                responseStatus: err.response.status,
+            });
+            throw new Error(`${err.response.status} ${err.response.statusText}`);
+        }
+        logError({
+            message: err.message,
+        });
+        throw err;
     });
     return response.data.access_token;
 }
@@ -34,8 +57,12 @@ const getStsToken = async () => {
 }
 
 const stsTokenHandler = async (req, res, next) => {
-    req.headers[HEADER_STS_TOKEN] = await getStsToken();
-    next();
+    try {
+        req.headers[HEADER_STS_TOKEN] = await getStsToken();
+        next();
+    } catch (error) {
+        next(error);
+    }
 }
 
 // for testing
