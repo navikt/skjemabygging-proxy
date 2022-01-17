@@ -4,6 +4,12 @@ ingresses:
 env:
   - name: NORG2_BASE_URL
     value: https://norg2.nais.adeo.no
+  - name: FOERSTESIDEGENERATOR_BASE_URL
+    value: https://foerstesidegenerator.intern.nav.no
+  - name: STS_TOKEN_URL
+    value: http://security-token-service.default.svc.nais.local/rest/v1/sts/token
+  - name: SERVICEUSER_USERNAME
+    value: srvsoknadsveiviser
 azure:
   application:
     tenant: nav.no
