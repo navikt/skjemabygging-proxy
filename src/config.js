@@ -1,6 +1,7 @@
 const config = {
     forstesidegeneratorBaseUrl: process.env.FOERSTESIDEGENERATOR_BASE_URL,
     norg2BaseUrl: process.env.NORG2_BASE_URL,
+    oppdaterenhetsinfoBaseUrl: process.env.OPPDATERENHETSINFO_BASE_URL,
     stsTokenUrl: process.env.STS_TOKEN_URL,
     stsTokenApiKey: process.env.STS_TOKEN_API_KEY,
     serviceUserUsername: process.env.SERVICEUSER_USERNAME,
