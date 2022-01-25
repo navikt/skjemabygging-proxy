@@ -22,6 +22,22 @@ describe("api", () => {
             );
     });
 
+    test("Oppdaterenhetsinfo: Test proxied api response", async () => {
+
+        const response = { testObject: '12345'};
+
+        nock(process.env.OPPDATERENHETSINFO_BASE_URL)
+            .get("/oppdaterenhetsinfo/api/hentenheter")
+            .reply(200, response);
+
+        await supertest(app).get("/oppdaterenhetsinfo/api/hentenheter")
+            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
+            .expect(200)
+            .then((res) =>
+                expect(JSON.stringify(res.body)).toBe(JSON.stringify(response))
+            );
+    });
+
     test("Førstesidegenerator: Test proxied api response", async () => {
 
         const stsScope = nock(STS_TEST_HOST)

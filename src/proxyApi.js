@@ -25,6 +25,12 @@ function setupProxy(app) {
         logLevel: 'warn',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
+    app.use('/oppdaterenhetsinfo', securityUtils.authenticateToken, createProxyMiddleware({
+        target: config.oppdaterenhetsinfoBaseUrl,
+        changeOrigin: true,
+        logLevel: 'warn',
+        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+    }));
 }
 
 exports.setupProxy = setupProxy;
