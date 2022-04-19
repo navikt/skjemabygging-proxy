@@ -24,6 +24,9 @@ accessPolicy:
       - application: skjemautfylling-forhandsvisning
         namespace: skjemadigitalisering
         cluster: dev-gcp
+      - application: skjemautfylling-delingslenke
+        namespace: skjemadigitalisering
+        cluster: dev-gcp
       - application: skjemautfylling-experimental
         namespace: skjemadigitalisering
         cluster: dev-gcp
