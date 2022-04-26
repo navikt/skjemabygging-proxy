@@ -33,6 +33,9 @@ accessPolicy:
       - application: skjemabygging-formio
         namespace: skjemadigitalisering
         cluster: dev-gcp
+      - application: skjemabygging-experimental
+        namespace: skjemadigitalisering
+        cluster: dev-gcp
       - application: soknadsveiviser
         namespace: skjemadigitalisering
         cluster: dev-gcp
