@@ -6,33 +6,37 @@ function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    if (token == null){
-        return res.status(403).send({
-            "timestamp": Date.now(),
-            "status": 403,
-            "error": "Forbidden",
-            "message": "Access Denied",
-            "path": req.originalUrl
-        })
-    }
-
-    jwt.verify(token, getKey, {
-        algorithms:["RS256"],
-        audience: process.env.AZURE_APP_CLIENT_ID,
-        issuer: process.env.AZURE_OPENID_CONFIG_ISSUER
-    }, function(err, decoded) {
-        if (err) {
-            console.log("jwt verify failed:", err);
-            return res.status(401).send({
+    if (process.env.NODE_ENV === 'development') {
+        next();
+    } else {
+        if (token == null){
+            return res.status(403).send({
                 "timestamp": Date.now(),
-                "status": 401,
-                "error": "Unauthorized",
+                "status": 403,
+                "error": "Forbidden",
                 "message": "Access Denied",
                 "path": req.originalUrl
-            });
+            })
         }
-        next();
-    });
+
+        jwt.verify(token, getKey, {
+            algorithms:["RS256"],
+            audience: process.env.AZURE_APP_CLIENT_ID,
+            issuer: process.env.AZURE_OPENID_CONFIG_ISSUER
+        }, function(err, decoded) {
+            if (err) {
+                console.log("jwt verify failed:", err);
+                return res.status(401).send({
+                    "timestamp": Date.now(),
+                    "status": 401,
+                    "error": "Unauthorized",
+                    "message": "Access Denied",
+                    "path": req.originalUrl
+                });
+            }
+            next();
+        });
+    }
 }
 
 let httpsProxy;

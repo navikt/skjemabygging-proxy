@@ -7,6 +7,7 @@ const config = {
     serviceUserUsername: process.env.SERVICEUSER_USERNAME,
     serviceUserPassword: process.env.SERVICEUSER_PASSWORD,
     foerstesidegeneratorApiKey: process.env.FOERSTESIDEGENERATOR_API_KEY,
+    kodeverkUrl: process.env.KODEVERK_URL,
 }
 
 module.exports = config;

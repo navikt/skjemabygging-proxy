@@ -31,6 +31,14 @@ function setupProxy(app) {
         logLevel: 'warn',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
+    app.use('/kodeverk', securityUtils.authenticateToken, createProxyMiddleware({
+        target: config.kodeverkUrl,
+        changeOrigin: true,
+        logLevel: 'warn',
+        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+    }));
 }
+
+
 
 exports.setupProxy = setupProxy;
