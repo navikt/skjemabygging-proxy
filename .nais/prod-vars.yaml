@@ -12,6 +12,8 @@ env:
     value: http://security-token-service.default.svc.nais.local/rest/v1/sts/token
   - name: SERVICEUSER_USERNAME
     value: srvsoknadsveiviser
+  - name: KODEVERK_URL
+    value: https://kodeverk.intern.nav.no/api/v1
 azure:
   application:
     tenant: nav.no
