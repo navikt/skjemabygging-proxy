@@ -8,6 +8,12 @@ const config = {
     serviceUserPassword: process.env.SERVICEUSER_PASSWORD,
     foerstesidegeneratorApiKey: process.env.FOERSTESIDEGENERATOR_API_KEY,
     kodeverkUrl: process.env.KODEVERK_URL,
+    exstreamBaseUrl: process.env.EXSTREAM_BASE_URL,
+    exstreamUsername: process.env.EXSTREAM_USERNAME,
+    exstreamPassword: process.env.EXSTREAM_PASSWORD,
+    //exstreamClientSecret: process.env.EXSTREAM_CLIENT_SECRET,
+    exstreamTicketUrl: process.env.EXSTREAM_TICKET_URL,
+    //exstreamTokenUrl: process.env.EXSTREAM_TOKEN_URL,
 }
 
 module.exports = config;
