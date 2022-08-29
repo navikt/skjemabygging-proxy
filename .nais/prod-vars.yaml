@@ -14,6 +14,12 @@ env:
     value: srvsoknadsveiviser
   - name: KODEVERK_URL
     value: https://kodeverk.intern.nav.no/api/v1
+  - name: EXSTREAM_BASE_URL
+    value: https://dokument1-q.adeo.no/tenant4/sgw
+  - name: EXSTREAM_USERNAME
+    value: edpdemouser@strs.role
+  - name: EXSTREAM_TICKET_URL
+    value: https://dokument1-q.adeo.no/otdstenant/tenant4/otdsws/rest/authentication/credentials
 azure:
   application:
     tenant: nav.no
