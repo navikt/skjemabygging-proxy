@@ -1,8 +1,18 @@
+const correlator = require('express-correlation-id');
 const config = require('../config.js');
 //import {pinoLogger} from '../log/logConfig.js';
 //const log = pinoLogger.child({module: 'ExstreamAuth'});
 //import {TokenSet} from 'openid-client';
 const axios = require("axios");
+
+const logError = logObject => {
+    const correlationId = correlator.getId();
+    console.log(JSON.stringify({
+        ...logObject,
+        url: URL,
+        correlation_id: correlationId
+    }));
+};
 
 class ExstreamAuth {
     ticket;
@@ -48,24 +58,18 @@ class ExstreamAuth {
     async fetchNewTicket() {
         try {
             const response = await axios.post(config.exstreamTicketUrl, {
-                body: JSON.stringify({
-                    'userName': this.Username,
-                    'password': this.Password
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                'userName': this.Username,
+                'password': this.Password
             });
-            if (response.status === 200) {
-                const data = await response.json();
+                const { data } = response;
                 this.ticket = data.ticket;
                 this.ticket_timestamp = Date.now();
-            }else{
-                console.info('Status %s fra Exstream ved forsøk på å hente ticket', response.status);
-                throw new Error("Klarte ikke hente ticket");
-            }
         } catch (err) {
-            console.error('Klarte ikke hente ticket fra Exstream. %s', err);
+            logError({
+                message: "Klarte ikke hente ticket fra Exstream.",
+                responseData: err.response.data,
+                responseStatus: err.response.status,
+            });
             throw err;
         }
     };
