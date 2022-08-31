@@ -1,8 +1,5 @@
 const correlator = require('express-correlation-id');
 const config = require('../config.js');
-//import {pinoLogger} from '../log/logConfig.js';
-//const log = pinoLogger.child({module: 'ExstreamAuth'});
-//import {TokenSet} from 'openid-client';
 const axios = require("axios");
 
 const logError = logObject => {
@@ -20,7 +17,6 @@ class ExstreamAuth {
     token;
     Username = config.exstreamUsername;
     Password = config.exstreamPassword;
-    //Client_secret = config.exstreamClientSecret;
 
     constructor() {
         this.fetchNewTicket()
@@ -30,13 +26,6 @@ class ExstreamAuth {
             .catch((err) => {
                 console.error('Klarte ikke å hente ticket til Exstream under oppstart. Forsøker på nytt ved behov');
             });
-        /*this.fetchOrRefreshToken()
-            .then((res) => {
-                log.info('Hentet token fra Exstream');
-            })
-            .catch((err) => {
-                log.error('Klarte ikke å hente token til Exstream under oppstart. Forsøker på nytt ved behov');
-            });*/
     }
 
     async getTicket() {
@@ -46,14 +35,6 @@ class ExstreamAuth {
         }
         return this.ticket;
     }
-
-    /* async getToken() {
-        if (!this.token || this.token.expired()) {
-            log.info('Exstream token expired, requesting a new token');
-            await this.fetchOrRefreshToken();
-        }
-        return this.token.access_token;
-    } */
 
     async fetchNewTicket() {
         try {
@@ -73,35 +54,6 @@ class ExstreamAuth {
             throw err;
         }
     };
-
-    /*async fetchOrRefreshToken() {
-        try {
-            const response = await axios.post(config.exstreamTokenUrl, {
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                body: new URLSearchParams({
-                    'grant_type': 'password',
-                    'username': this.Username,
-                    'password': this.Password,
-                    'client_id': 'Exstream',
-                    'scope': 'resource:Exstream',
-                    'client_secret': this.Client_secret
-                }),
-            });
-            if (response.status === 200) {
-                const data = await response.json();
-                this.token = new TokenSet(data);
-            }else {
-                log.info('Status %s fra Exstream ved forsøk på å hente token', response.status);
-                throw new Error("Klarte ikke hente token");
-            }
-        } catch (err) {
-            log.error('Klarte ikke hente token fra Exstream. %s', err);
-            throw err;
-        }
-    }*/
 
     ticketExpired() {
         if (!this.ticket || !this.ticket_timestamp) {
