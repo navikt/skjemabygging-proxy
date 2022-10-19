@@ -1,5 +1,5 @@
-const correlator = require('express-correlation-id');
-const config = require('../config.js');
+const correlator = require("express-correlation-id");
+const config = require("../config.js");
 const axios = require("axios");
 
 const logError = logObject => {
@@ -21,16 +21,16 @@ class ExstreamAuth {
     constructor() {
         this.fetchNewTicket()
             .then((res) => {
-                console.info('Hentet ticket fra Exstream');
+                console.info("Hentet ticket fra Exstream");
             })
             .catch((err) => {
-                console.error('Klarte ikke å hente ticket til Exstream under oppstart. Forsøker på nytt ved behov');
+                console.error("Klarte ikke å hente ticket til Exstream under oppstart. Forsøker på nytt ved behov");
             });
     }
 
     async getTicket() {
         if (this.ticketExpired()) {
-            console.info('Exstream ticket expired, requesting a new ticket');
+            console.info("Exstream ticket expired, requesting a new ticket");
             await this.fetchNewTicket();
         }
         return this.ticket;
@@ -39,8 +39,8 @@ class ExstreamAuth {
     async fetchNewTicket() {
         try {
             const response = await axios.post(config.exstreamTicketUrl, {
-                'userName': this.Username,
-                'password': this.Password
+                "userName": this.Username,
+                "password": this.Password
             });
                 const { data } = response;
                 this.ticket = data.ticket;
