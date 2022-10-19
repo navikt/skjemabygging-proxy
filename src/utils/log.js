@@ -30,7 +30,7 @@ const createLog = message => {
     });
 };
 
-export {
+module.exports = {
     logDebug,
     logInfo,
     logWarn,
