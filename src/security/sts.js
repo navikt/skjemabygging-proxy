@@ -1,19 +1,10 @@
 const axios = require("axios");
 const jwt = require("jsonwebtoken");
-const correlator = require('express-correlation-id');
 const config = require("../config");
 
 const HEADER_STS_TOKEN = "StsToken";
 const URL = config.stsTokenUrl + "?grant_type=client_credentials&scope=openid";
-
-const logError = logObject => {
-    const correlationId = correlator.getId();
-    console.log(JSON.stringify({
-        ...logObject,
-        url: URL,
-        correlation_id: correlationId
-    }));
-};
+const {logError} = require("../utils/log");
 
 const fetchStsToken = async () => {
     const response = await axios.get(URL, {
