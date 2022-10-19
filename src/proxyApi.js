@@ -43,7 +43,10 @@ function setupProxy(app) {
         target: config.exstreamBaseUrl,
         changeOrigin: true,
         logLevel: 'debug',
-        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyReq: (proxyReq => {
+            proxyReq.removeHeader('authorization');
+            console.debug(proxyReq);
+        }),
         pathRewrite: {
             '^/': '/v1/communications?name=exstream_rest_gateway&version=1', // add base path
         }
