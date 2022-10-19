@@ -12,6 +12,7 @@ class ExstreamAuth {
     constructor() {
         this.fetchNewTicket()
             .then((res) => {
+                console.log("Hentet ticket fra Exstream, test")
                 logInfo("Hentet ticket fra Exstream")
             })
             .catch((err) => {
