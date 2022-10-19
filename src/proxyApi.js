@@ -42,7 +42,7 @@ function setupProxy(app) {
     app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, createProxyMiddleware({
         target: config.exstreamBaseUrl,
         changeOrigin: true,
-        logLevel: 'warn',
+        logLevel: 'debug',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         pathRewrite: {
             '^/': '/v1/communications?name=exstream_rest_gateway&version=1', // add base path
