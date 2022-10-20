@@ -3,6 +3,7 @@ const securityUtils = require('./securityUtils.js')
 const config = require('./config');
 const { stsTokenHandler, HEADER_STS_TOKEN } = require("./security/sts");
 const { exstreamTokenHandler } = require("./security/exstreamAuth");
+const {logDebug} = require("./utils/log");
 
 function setupProxy(app) {
 
@@ -44,6 +45,9 @@ function setupProxy(app) {
         changeOrigin: true,
         logLevel: 'debug',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyRes: (proxyRes, req, res) => {
+            logDebug(JSON.stringify(res));
+        },
         pathRewrite: {
             '^/': '/v1/communications?name=exstream_rest_gateway&version=1', // add base path
         }

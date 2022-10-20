@@ -1,6 +1,6 @@
 const config = require("../config.js");
 const axios = require("axios");
-const {logError, logInfo} = require("../utils/log");
+const {logError, logInfo, logDebug} = require("../utils/log");
 
 class ExstreamAuth {
     ticket;
@@ -33,9 +33,9 @@ class ExstreamAuth {
                 "userName": this.Username,
                 "password": this.Password
             });
-                const { data } = response;
-                this.ticket = data.ticket;
-                this.ticket_timestamp = Date.now();
+            const {data} = response;
+            this.ticket = data.ticket;
+            this.ticket_timestamp = Date.now();
         } catch (err) {
             logError({
                 message: "Could not get ticket from Exstream",
@@ -47,12 +47,19 @@ class ExstreamAuth {
     };
 
     ticketExpired() {
+        logDebug("Validate ticket expiration timestamp");
         if (!this.ticket || !this.ticket_timestamp) {
             return true;
         }
-        const tokenAgeHours = Math.ceil((Date.now() - this.ticket_timestamp)/1000/60/60);
+        const tokenAgeHours = Math.ceil((Date.now() - this.ticket_timestamp) / 1000 / 60 / 60);
 
-        return tokenAgeHours >= 8;
+        if (tokenAgeHours >= 8) {
+            logDebug("Exstream ticket still valid");
+            return true;
+        } else {
+            logDebug("Exstream ticket have expired");
+            return false;
+        }
     }
 }
 
@@ -60,6 +67,7 @@ const exstreamAuth = new ExstreamAuth();
 
 const exstreamTokenHandler = async (req, res, next) => {
     try {
+        logDebug("Add ODTSTicket to header");
         req.headers["ODTSTicket"] = await exstreamAuth.getTicket();
         next();
     } catch (error) {
