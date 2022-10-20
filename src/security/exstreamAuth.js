@@ -54,11 +54,11 @@ class ExstreamAuth {
         const tokenAgeHours = Math.ceil((Date.now() - this.ticket_timestamp) / 1000 / 60 / 60);
 
         if (tokenAgeHours >= 8) {
-            logDebug("Exstream ticket still valid");
-            return true;
-        } else {
-            logDebug("Exstream ticket have expired");
+            logDebug("Exstream ticket still valid, age: " + tokenAgeHours);
             return false;
+        } else {
+            logDebug("Exstream ticket have expired, age: " + tokenAgeHours);
+            return true;
         }
     }
 }

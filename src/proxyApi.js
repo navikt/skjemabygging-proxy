@@ -46,7 +46,8 @@ function setupProxy(app) {
         logLevel: 'debug',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         onProxyRes: (proxyRes, req, res) => {
-            const response = proxyRes.toString("utf8");
+            const response = proxyRes.toString('utf8');
+            logDebug(`Status på Exstream request ${proxyRes.statusCode}`);
             logDebug(JSON.stringify(response));
         },
         pathRewrite: {
