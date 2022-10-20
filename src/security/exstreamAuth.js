@@ -39,7 +39,7 @@ class ExstreamAuth {
                 this.ticket_timestamp = Date.now();
         } catch (err) {
             logError({
-                message: "Klarte ikke hente ticket fra Exstream.",
+                message: "Could not get ticket from Exstream. " + config.exstreamTicketUrl + " - " + this.Username + " - " + this.Password,
                 responseData: err.response.data,
                 responseStatus: err.response.status,
             });
