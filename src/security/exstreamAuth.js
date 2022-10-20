@@ -10,13 +10,14 @@ class ExstreamAuth {
     Password = config.exstreamPassword;
 
     constructor() {
-        this.fetchNewTicket()
-            .then((res) => {
-                logInfo("Get ticket from Exstream")
-            })
-            .catch((err) => {
+        (async () => {
+            try {
+                await this.fetchNewTicket();
+                logInfo("Get ticket from Exstream");
+            } catch (e) {
                 logError("Could not get ticket from Exstream during startup. Will try again on next request.");
-            });
+            }
+        })();
     }
 
     async getTicket() {
@@ -36,6 +37,8 @@ class ExstreamAuth {
             const {data} = response;
             this.ticket = data.ticket;
             this.ticket_timestamp = Date.now();
+            logDebug("Got new ticket");
+            logDebug(data);
         } catch (err) {
             logError({
                 message: "Could not get ticket from Exstream",
