@@ -12,11 +12,10 @@ class ExstreamAuth {
     constructor() {
         this.fetchNewTicket()
             .then((res) => {
-                console.log("Hentet ticket fra Exstream, test")
-                logInfo("Hentet ticket fra Exstream")
+                logInfo("Get ticket from Exstream")
             })
             .catch((err) => {
-                logError("Klarte ikke å hente ticket til Exstream under oppstart. Forsøker på nytt ved behov");
+                logError("Could not get ticket from Exstream during startup. Will try again on next request.");
             });
     }
 
@@ -39,7 +38,7 @@ class ExstreamAuth {
                 this.ticket_timestamp = Date.now();
         } catch (err) {
             logError({
-                message: "Could not get ticket from Exstream. " + config.exstreamTicketUrl + " - " + this.Username + " - " + this.Password,
+                message: "Could not get ticket from Exstream",
                 responseData: err.response.data,
                 responseStatus: err.response.status,
             });
