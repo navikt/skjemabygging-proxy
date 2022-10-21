@@ -69,9 +69,8 @@ const exstreamAuth = new ExstreamAuth();
 
 const exstreamTokenHandler = async (req, res, next) => {
     try {
-        const ticket = await exstreamAuth.getTicket();
-        logDebug(`Add ODTSTicket to header (${ticket})`);
-        req.headers["ODTSTicket"] = ticket;
+        logDebug(`Add ODTSTicket to header`);
+        req.headers["ODTSTicket"] = await exstreamAuth.getTicket();
         next();
     } catch (error) {
         next(error);

@@ -47,6 +47,7 @@ function setupProxy(app) {
         logLevel: 'debug',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         onProxyRes: (proxyRes, req, res) => getBody(res, proxyRes, rawBody => {
+            logDebug("Printing Extream body");
             logDebug(rawBody);
         }),
         pathRewrite: {
