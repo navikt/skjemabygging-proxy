@@ -57,10 +57,9 @@ class ExstreamAuth {
         const tokenAgeHours = Math.ceil((Date.now() - this.ticket_timestamp) / 1000 / 60 / 60);
 
         if (tokenAgeHours >= 8) {
-            logDebug("Exstream ticket still valid, age: " + tokenAgeHours);
             return false;
         } else {
-            logDebug("Exstream ticket have expired, age: " + tokenAgeHours);
+            logDebug("Exstream ticket have expired");
             return true;
         }
     }
@@ -70,8 +69,9 @@ const exstreamAuth = new ExstreamAuth();
 
 const exstreamTokenHandler = async (req, res, next) => {
     try {
-        logDebug("Add ODTSTicket to header");
-        req.headers["ODTSTicket"] = await exstreamAuth.getTicket();
+        const ticket = await exstreamAuth.getTicket();
+        logDebug(`Add ODTSTicket to header (${ticket})`);
+        req.headers["ODTSTicket"] = ticket;
         next();
     } catch (error) {
         next(error);

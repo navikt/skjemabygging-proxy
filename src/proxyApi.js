@@ -1,4 +1,5 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const getBody = require('http-proxy-middleware-body');
 const securityUtils = require('./securityUtils.js')
 const config = require('./config');
 const { stsTokenHandler, HEADER_STS_TOKEN } = require("./security/sts");
@@ -45,14 +46,9 @@ function setupProxy(app) {
         changeOrigin: true,
         logLevel: 'debug',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
-        onProxyRes: (proxyRes, req, res) => {
-            const response = proxyRes.toString('utf8');
-            logDebug(`Status Exstream request ${proxyRes.statusCode}`);
-            logDebug(`Url Exstream request ${proxyRes.url}`);
-            logDebug(JSON.stringify(response));
-            logDebug(JSON.stringify(res));
-            logDebug(res);
-        },
+        onProxyRes: (proxyRes, req, res) => getBody(res, proxyRes, rawBody => {
+            logDebug(rawBody);
+        }),
         pathRewrite: {
             '^/': '/v1/communications?name=exstream_rest_gateway&version=1', // add base path
         }
