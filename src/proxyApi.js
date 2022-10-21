@@ -47,8 +47,11 @@ function setupProxy(app) {
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         onProxyRes: (proxyRes, req, res) => {
             const response = proxyRes.toString('utf8');
-            logDebug(`Status på Exstream request ${proxyRes.statusCode}`);
+            logDebug(`Status Exstream request ${proxyRes.statusCode}`);
+            logDebug(`Url Exstream request ${proxyRes.url}`);
             logDebug(JSON.stringify(response));
+            logDebug(JSON.stringify(res));
+            logDebug(res);
         },
         pathRewrite: {
             '^/': '/v1/communications?name=exstream_rest_gateway&version=1', // add base path
