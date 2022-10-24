@@ -4,7 +4,7 @@ const {logError, logInfo, logDebug} = require("../utils/log");
 
 class ExstreamAuth {
     ticket;
-    ticket_timestamp;
+    ticketTimestamp;
     token;
     Username = config.exstreamUsername;
     Password = config.exstreamPassword;
@@ -36,7 +36,7 @@ class ExstreamAuth {
             });
             const {data} = response;
             this.ticket = data.ticket;
-            this.ticket_timestamp = Date.now();
+            this.ticketTimestamp = Date.now();
             logDebug("Got new ticket");
             logDebug(data);
         } catch (err) {
@@ -51,10 +51,10 @@ class ExstreamAuth {
 
     ticketExpired() {
         logDebug("Validate ticket expiration timestamp");
-        if (!this.ticket || !this.ticket_timestamp) {
+        if (!this.ticket || !this.ticketTimestamp) {
             return true;
         }
-        const tokenAgeHours = Math.ceil((Date.now() - this.ticket_timestamp) / 1000 / 60 / 60);
+        const tokenAgeHours = Math.ceil((Date.now() - this.ticketTimestamp) / 1000 / 60 / 60);
 
         if (tokenAgeHours >= 8) {
             return false;
@@ -70,10 +70,6 @@ const exstreamAuth = new ExstreamAuth();
 const exstreamTokenHandler = async (req, res, next) => {
     try {
         const ticket = await exstreamAuth.getTicket();
-        if (!ticket) {
-            throw new Error("No valid ticket");
-        }
-
         logDebug("Add ODTSTicket to header");
         req.headers["ODTSTicket"] = ticket;
         next();

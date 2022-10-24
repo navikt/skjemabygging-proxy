@@ -15,11 +15,11 @@ env:
   - name: KODEVERK_URL
     value: https://kodeverk.dev.intern.nav.no/api/v1
   - name: EXSTREAM_BASE_URL
-    value: https://dokument-t.adeo.no/tenant1/sgw
+    value: https://dokument1-q.adeo.no/tenant1/sgw
   - name: EXSTREAM_USERNAME
     value: tenantadmin@strs.role
   - name: EXSTREAM_TICKET_URL
-    value: https://dokument-t.adeo.no/tenant1/otdsws/rest/authentication/credentials
+    value: https://dokument1-q.adeo.no/otdstenant/tenant1/otdsws/rest/authentication/credentials
 azure:
   application:
     tenant: trygdeetaten.no
