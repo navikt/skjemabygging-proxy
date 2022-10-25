@@ -45,13 +45,16 @@ function setupProxy(app) {
         target: config.exstreamBaseUrl,
         changeOrigin: true,
         logLevel: 'debug',
-        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyReq: (proxyReq => {
+            logDebug(`On request to ${proxyReq.host} - ${proxyReq.path}`);
+            proxyReq.removeHeader('authorization');
+        }),
         onProxyRes: (proxyRes, req, res) => getBody(res, proxyRes, rawBody => {
             logDebug("Printing Extream body");
             logDebug(rawBody);
         }),
         pathRewrite: {
-            '^/exstream': '/v1/communications?name=exstream_rest_gateway&version=1',
+            '^/': '/v1/communications?name=exstream_rest_gateway&version=1',
         }
     }));
 }
