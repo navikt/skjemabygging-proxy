@@ -54,7 +54,7 @@ function setupProxy(app) {
             logDebug(rawBody);
         }),
         pathRewrite: {
-            '^/': '/v1/communications?name=exstream_rest_gateway&version=1',
+            '^/exstream': '/v1/communications?name=exstream_rest_gateway&version=1',
         }
     }));
 }
