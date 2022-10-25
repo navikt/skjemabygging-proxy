@@ -30,7 +30,8 @@ class ExstreamAuth {
 
     async fetchNewTicket() {
         try {
-            const response = await axios.post(config.exstreamTicketUrl, {
+            const ticketUrl = `${config.exstreamBaseUrl}/tenant1/otdsws/rest/authentication/credentials`;
+            const response = await axios.post(ticketUrl, {
                 "userName": this.Username,
                 "password": this.Password
             });

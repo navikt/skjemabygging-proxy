@@ -11,7 +11,6 @@ const config = {
     exstreamBaseUrl: process.env.EXSTREAM_BASE_URL,
     exstreamUsername: process.env.EXSTREAM_USERNAME,
     exstreamPassword: process.env.EXSTREAM_PASSWORD,
-    exstreamTicketUrl: process.env.EXSTREAM_TICKET_URL,
 }
 
 module.exports = config;
