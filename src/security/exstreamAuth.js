@@ -29,7 +29,6 @@ class ExstreamAuth {
     }
 
     async fetchNewTicket() {
-        logDebug(`Getting ticket from "${config.exstreamTicketUrl}" with "${this.Username}" and "${this.Password}"`);
         try {
             const response = await axios.post(config.exstreamTicketUrl, {
                 "userName": this.Username,
@@ -71,7 +70,7 @@ const exstreamAuth = new ExstreamAuth();
 const exstreamTokenHandler = async (req, res, next) => {
     try {
         const ticket = await exstreamAuth.getTicket();
-        logDebug(`Add ODTSTicket to header (${ticket})`);
+        logDebug("Add ODTSTicket to header");
         req.headers["ODTSTicket"] = ticket;
         next();
     } catch (error) {
