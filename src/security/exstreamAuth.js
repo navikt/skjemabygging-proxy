@@ -1,6 +1,6 @@
 const config = require("../config.js");
 const axios = require("axios");
-const {logError, logDebug} = require("../utils/log");
+const {logError, logDebug, logInfo} = require("../utils/log");
 
 const getTicket = async () => {
     logDebug("Requesting new ticket for Exstream");
@@ -11,8 +11,10 @@ const getTicket = async () => {
             "password": this.Password
         });
         const {data} = response;
+        logInfo(response);
         return data.ticket;
     } catch (err) {
+        logError(err);
         logError({
             message: "Could not get ticket from Exstream",
             responseData: err.response.data,
