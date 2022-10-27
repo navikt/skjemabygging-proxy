@@ -1,10 +1,8 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const getBody = require('http-proxy-middleware-body');
+const {createProxyMiddleware} = require('http-proxy-middleware');
 const securityUtils = require('./securityUtils.js')
 const config = require('./config');
-const { stsTokenHandler, HEADER_STS_TOKEN } = require("./security/sts");
-const { exstreamTokenHandler } = require("./security/exstreamAuth");
-const {logDebug} = require("./utils/log");
+const {stsTokenHandler, HEADER_STS_TOKEN} = require("./security/sts");
+const {exstreamTokenHandler} = require("./security/exstreamAuth");
 
 function setupProxy(app) {
 
@@ -44,21 +42,13 @@ function setupProxy(app) {
     app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, createProxyMiddleware({
         target: config.exstreamBaseUrl,
         changeOrigin: true,
-        logLevel: 'debug',
-        onProxyReq: (proxyReq => {
-            logDebug(`On request to ${proxyReq.host} - ${proxyReq.path}`);
-            proxyReq.removeHeader('authorization');
-        }),
-        onProxyRes: (proxyRes, req, res) => getBody(res, proxyRes, rawBody => {
-            logDebug("Printing Extream body");
-            logDebug(rawBody);
-        }),
+        logLevel: 'warn',
+        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         pathRewrite: {
             '^/exstream': '/tenant1/sgw/v1/communications?name=exstream_rest_gateway&version=1',
         }
     }));
 }
-
 
 
 exports.setupProxy = setupProxy;

@@ -6,17 +6,13 @@ const fetchNewTicket = async () => {
     try {
         const ticketUrl = `${config.exstreamBaseUrl}/tenant1/otdsws/rest/authentication/credentials`;
         const response = await axios.post(ticketUrl, {
-            "userName": this.Username,
-            "password": this.Password
+            "userName": config.exstreamUsername,
+            "password": config.exstreamPassword,
         });
         const {data} = response;
         return data.ticket;
     } catch (err) {
-        logError({
-            message: "Could not get ticket from Exstream",
-            responseData: err.response.data,
-            responseStatus: err.response.status,
-        });
+        logError("Could not get ticket from Exstream");
         throw err;
     }
 };
