@@ -12,8 +12,7 @@ const fetchNewTicket = async () => {
         const {data} = response;
         return data.ticket;
     } catch (err) {
-        logError(`Error: ${err}`);
-        logError(err.message);
+        logError("Could not get ticket from Exstream");
         throw err;
     }
 };
