@@ -15,7 +15,7 @@ env:
   - name: KODEVERK_URL
     value: https://kodeverk.dev.intern.nav.no/api/v1
   - name: EXSTREAM_BASE_URL
-    value: https://dokument-q.adeo.no
+    value: https://dokument1-q.adeo.no
   - name: EXSTREAM_USERNAME
     value: tenantadmin@strs.role
 azure:

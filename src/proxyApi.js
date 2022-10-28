@@ -45,7 +45,7 @@ function setupProxy(app) {
         logLevel: 'warn',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         pathRewrite: {
-            '^/exstream': '/tenant1/sgw/v1/communications?name=exstream_rest_gateway&version=1',
+            '^/exstream': '/tenant1/sgw/v1/communications?name=ccm_service_html_to_pdf&version=1',
         }
     }));
 }
