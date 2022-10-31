@@ -1,10 +1,8 @@
 const {createProxyMiddleware} = require('http-proxy-middleware');
-const getBody = require('http-proxy-middleware-body');
 const securityUtils = require('./securityUtils.js')
 const config = require('./config');
 const {stsTokenHandler, HEADER_STS_TOKEN} = require("./security/sts");
 const {exstreamTokenHandler} = require("./security/exstreamAuth");
-const {logDebug} = require("./utils/log");
 
 function setupProxy(app) {
 
