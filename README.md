@@ -23,6 +23,9 @@ appen stiller krav til at følgende variabler er tilgjengelig (verdier hentet fr
     AZURE_APP_CLIENT_ID=<proxy app clientID>
     OPPDATERENHETSINFO_BASE_URL=<oppdaterer base url>
     KODEVERK_URL=https://kodeverk.dev.intern.nav.no/api/v1 
+    EXSTREAM_BASE_URL=https://dokument1-q.adeo.no
+    EXSTREAM_USERNAME=tenantadmin@strs.role
+    EXSTREAM_PASSWORD=
 
 JWKS_URI og ISSUER kan hentes fra https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration,
 og CLIENT_ID for proxy finnes slik: https://security.labs.nais.io/pages/idp/azure-ad.html#hvordan-finne-clientid-for-applikasjoner

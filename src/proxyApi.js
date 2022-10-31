@@ -1,7 +1,8 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const {createProxyMiddleware} = require('http-proxy-middleware');
 const securityUtils = require('./securityUtils.js')
 const config = require('./config');
-const { stsTokenHandler, HEADER_STS_TOKEN } = require("./security/sts");
+const {stsTokenHandler, HEADER_STS_TOKEN} = require("./security/sts");
+const {exstreamTokenHandler} = require("./security/exstreamAuth");
 
 function setupProxy(app) {
 
@@ -37,8 +38,17 @@ function setupProxy(app) {
         logLevel: 'warn',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
-}
 
+    app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, createProxyMiddleware({
+        target: config.exstreamBaseUrl,
+        changeOrigin: true,
+        logLevel: 'warn',
+        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        pathRewrite: {
+            '^/exstream': '/tenant1/sgw/v1/communications?name=ccm_service_html_to_pdf&version=1',
+        }
+    }));
+}
 
 
 exports.setupProxy = setupProxy;
