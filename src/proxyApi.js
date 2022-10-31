@@ -47,7 +47,7 @@ function setupProxy(app) {
         logLevel: 'warn',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         onProxyRes: (proxyRes, req, res) => getBody(res, proxyRes, rawBody => {
-            logDebug(proxyRes.statusCode);
+            logDebug(res.status);
             logDebug(rawBody);
         }),
         pathRewrite: {
