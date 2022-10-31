@@ -20,7 +20,7 @@ const fetchNewTicket = async () => {
 const exstreamTokenHandler = async (req, res, next) => {
     try {
         const ticket = await fetchNewTicket();
-        logDebug(`Add OTDSTicket to header ${ticket}`);
+        logDebug("Add OTDSTicket to header");
         req.headers["OTDSTicket"] = ticket;
         next();
     } catch (error) {

@@ -46,10 +46,6 @@ function setupProxy(app) {
         changeOrigin: true,
         logLevel: 'warn',
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
-        onProxyRes: (proxyRes, req, res) => getBody(res, proxyRes, rawBody => {
-            logDebug(res.status);
-            logDebug(rawBody);
-        }),
         pathRewrite: {
             '^/exstream': '/tenant1/sgw/v1/communications?name=ccm_service_html_to_pdf&version=1',
         }
