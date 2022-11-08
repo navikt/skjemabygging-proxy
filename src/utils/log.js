@@ -25,7 +25,6 @@ const createLog = message => {
 
     return JSON.stringify({
         ...message,
-        url: URL,
         correlation_id: correlation.getId(),
     });
 };
