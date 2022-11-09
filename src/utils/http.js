@@ -21,7 +21,7 @@ const logProxyResError = async (proxyRes, req) => {
         const contentType = proxyRes.headers["content-type"];
         const proxyResponseBody = await parseResponseBody(proxyRes, contentType);
         const message = `Proxy response error${proxyResponseBody.message ? `: ${proxyResponseBody.message}` : ""}`;
-        logError({message, httpStatus: proxyRes.statusCode, contentType, proxyResponseBody, url: req.url});
+        logError({message, httpStatus: proxyRes.statusCode, contentType, proxyResponseBody: JSON.stringify(proxyResponseBody), url: req.url});
     }
 };
 
