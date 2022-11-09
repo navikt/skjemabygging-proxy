@@ -1,5 +1,5 @@
 const {createProxyMiddleware} = require('http-proxy-middleware');
-const securityUtils = require('./securityUtils.js')
+const securityUtils = require('./securityUtils.js');
 const config = require('./config');
 const {stsTokenHandler, HEADER_STS_TOKEN} = require("./security/sts");
 const {exstreamTokenHandler} = require("./security/exstreamAuth");
@@ -11,7 +11,7 @@ function setupProxy(app) {
     app.use('/foersteside', securityUtils.authenticateToken, stsTokenHandler, createProxyMiddleware({
         target: config.forstesidegeneratorBaseUrl,
         changeOrigin: true,
-        logLevel: 'warn',
+        logLevel: config.logLevel,
         onProxyReq: (proxyReq => {
             proxyReq.setHeader('Authorization', `Bearer ${proxyReq.getHeader(HEADER_STS_TOKEN)}`);
             proxyReq.setHeader('x-nav-apiKey', config.foerstesidegeneratorApiKey);
@@ -25,26 +25,27 @@ function setupProxy(app) {
     app.use('/norg2', securityUtils.authenticateToken, createProxyMiddleware({
         target: config.norg2BaseUrl,
         changeOrigin: true,
-        logLevel: 'warn',
+        logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyRes: logProxyResError,
     }));
     app.use('/oppdaterenhetsinfo', securityUtils.authenticateToken, createProxyMiddleware({
         target: config.oppdaterenhetsinfoBaseUrl,
         changeOrigin: true,
-        logLevel: 'warn',
+        logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
     app.use('/kodeverk', securityUtils.authenticateToken, createProxyMiddleware({
         target: config.kodeverkUrl,
         changeOrigin: true,
-        logLevel: 'warn',
+        logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
 
     app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, createProxyMiddleware({
         target: config.exstreamBaseUrl,
         changeOrigin: true,
-        logLevel: 'warn',
+        logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         pathRewrite: {
             '^/exstream': '/tenant1/sgw/v1/communications?name=ccm_service_html_to_pdf&version=1',
