@@ -24,7 +24,7 @@ app.use(morgan((token, req, res) => {
 }, {
     skip: function (req, res) {
         if (config.logLevel === "debug") {
-            return false;
+            return req.path.startsWith("/internal");
         }
         return res.statusCode < 400;
     }
