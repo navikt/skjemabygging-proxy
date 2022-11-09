@@ -37,7 +37,7 @@ function authenticateToken(req, res, next) {
                     "path": req.originalUrl
                 });
             }
-            logDebug({message: "JWT verify succeeded", url: req.originalUrl, decodedJwt: decoded});
+            logDebug({message: "JWT verify succeeded", url: req.originalUrl});
             next();
         });
     }
