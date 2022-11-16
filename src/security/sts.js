@@ -19,11 +19,13 @@ const fetchStsToken = async () => {
             logError({
                 responseData: err.response.data,
                 responseStatus: err.response.status,
+                url: URL,
             });
             throw new Error(`${err.response.status} ${err.response.statusText}`);
         }
         logError({
             message: err.message,
+            url: URL,
         });
         throw err;
     });

@@ -11,6 +11,7 @@ const config = {
     exstreamBaseUrl: process.env.EXSTREAM_BASE_URL,
     exstreamUsername: process.env.EXSTREAM_USERNAME,
     exstreamPassword: process.env.EXSTREAM_PASSWORD,
+    logLevel: process.env.PROXY_LOG_LEVEL || "info",
 }
 
 module.exports = config;

@@ -1,22 +1,42 @@
 const correlation = require("express-correlation-id");
+const config = require('../config');
+
+const levels = {
+    "debug": 1,
+    "info": 2,
+    "warn": 3,
+    "error": 4,
+}
+
+const appLogLevel = levels[config.logLevel || "info"];
+
+const isEnabled = logLevel => levels[logLevel] >= appLogLevel;
 
 const logDebug = logObject => {
-    console.debug(createLog(logObject));
+    if (isEnabled("debug")) {
+        console.debug(createLog(logObject, "debug"));
+    }
 };
 
 const logInfo = logObject => {
-    console.info(createLog(logObject));
+    if (isEnabled("info")) {
+        console.info(createLog(logObject, "info"));
+    }
 };
 
 const logWarn = logObject => {
-    console.warn(createLog(logObject));
+    if (isEnabled("warn")) {
+        console.warn(createLog(logObject, "warn"));
+    }
 };
 
 const logError = logObject => {
-    console.log(createLog(logObject));
+    if (isEnabled("error")) {
+        console.error(createLog(logObject, "error"));
+    }
 };
 
-const createLog = message => {
+const createLog = (message, level) => {
     if (typeof message === "string") {
         message = {
             message: message,
@@ -25,7 +45,7 @@ const createLog = message => {
 
     return JSON.stringify({
         ...message,
-        url: URL,
+        level,
         correlation_id: correlation.getId(),
     });
 };

@@ -4,7 +4,9 @@ const promBundle = require("express-prom-bundle");
 const ecsFormat = require('@elastic/ecs-morgan-format')
 const correlator = require('express-correlation-id');
 const actuators = require('./actuators.js')
+const config = require('./config');
 const proxyApi = require('./proxyApi.js')
+const {logError} = require("./utils/log");
 
 // Create Express Server
 const app = express();
@@ -20,7 +22,12 @@ app.use(morgan((token, req, res) => {
     delete logEntry.user_agent;
     return JSON.stringify(logEntry);
 }, {
-    skip: function (req, res) { return res.statusCode < 400 }
+    skip: function (req, res) {
+        if (config.logLevel === "debug") {
+            return req.path.startsWith("/internal");
+        }
+        return res.statusCode < 400;
+    }
 }));
 
 // Add the options to the prometheus middleware most option are for http_request_duration_seconds histogram metric
@@ -42,9 +49,8 @@ app.use(metricsMiddleware)
 proxyApi.setupProxy(app);
 actuators.setupAcuators(app);
 
-app.use(async (err, req, res, next) => {
-    const correlation_id = correlator.getId();
-    console.error(JSON.stringify({message: err.message, level: "Error", correlation_id}));
+app.use((err, req, res, next) => {
+    logError({message: err.message});
     res.status(500);
     res.contentType("application/json");
     res.send({ message: err.message, correlation_id });

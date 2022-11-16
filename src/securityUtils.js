@@ -1,15 +1,18 @@
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
 const {HttpsProxyAgent} = require("https-proxy-agent");
+const {logDebug, logInfo} = require("./utils/log");
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
     if (process.env.NODE_ENV === 'development') {
+        logDebug("Skipping token authentication in development");
         next();
     } else {
         if (token == null){
+            logInfo({message: "Token missing", url: req.originalUrl});
             return res.status(403).send({
                 "timestamp": Date.now(),
                 "status": 403,
@@ -25,7 +28,7 @@ function authenticateToken(req, res, next) {
             issuer: process.env.AZURE_OPENID_CONFIG_ISSUER
         }, function(err, decoded) {
             if (err) {
-                console.log("jwt verify failed:", err);
+                logInfo({message: "JWT verify failed", url: req.originalUrl, err});
                 return res.status(401).send({
                     "timestamp": Date.now(),
                     "status": 401,
@@ -34,6 +37,7 @@ function authenticateToken(req, res, next) {
                     "path": req.originalUrl
                 });
             }
+            logDebug({message: "JWT verify succeeded", url: req.originalUrl});
             next();
         });
     }
@@ -41,7 +45,10 @@ function authenticateToken(req, res, next) {
 
 let httpsProxy;
 if (process.env.HTTPS_PROXY) {
+    logDebug({message: "Configuring proxy", httpsProxy: process.env.HTTPS_PROXY});
     httpsProxy = new HttpsProxyAgent(process.env.HTTPS_PROXY);
+} else {
+    logDebug({message: "No proxy will be configured"});
 }
 
 var client = jwksClient({
