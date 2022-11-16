@@ -27,6 +27,9 @@ accessPolicy:
       - application: skjemautfylling
         namespace: skjemadigitalisering
         cluster: prod-gcp
+      - application: skjemabygging
+        namespace: skjemadigitalisering
+        cluster: prod-gcp
       - application: soknadsveiviser
         namespace: skjemadigitalisering
         cluster: prod-gcp
