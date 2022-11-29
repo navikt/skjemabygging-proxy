@@ -26,7 +26,10 @@ function setupProxy(app) {
         target: config.norg2BaseUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
-        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyReq: (proxyReq => {
+            proxyReq.removeHeader('authorization');
+            proxyReq.setHeader("consumerId", config.norg2ConsumerId);
+        }),
         onProxyRes: logProxyResError,
     }));
     app.use('/oppdaterenhetsinfo', securityUtils.authenticateToken, createProxyMiddleware({
