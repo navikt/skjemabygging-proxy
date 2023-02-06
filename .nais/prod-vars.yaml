@@ -19,7 +19,7 @@ env:
   - name: EXSTREAM_BASE_URL
     value: https://dokument1-q.adeo.no
   - name: EXSTREAM_USERNAME
-    value: tenantadmin@strs.role
+    value: edp_skjemabygger
 azure:
   application:
     tenant: nav.no
