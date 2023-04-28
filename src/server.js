@@ -15,6 +15,7 @@ app.use(correlator());
 // Logging
 app.use(morgan((token, req, res) => {
     const logEntry = JSON.parse(ecsFormat({ apmIntegration: false })(token, req, res));
+    logEntry.level = res.statusCode < 500 ? "Info" : "Error";
     logEntry.correlation_id = correlator.getId();
     delete logEntry.http;
     delete logEntry.url;
