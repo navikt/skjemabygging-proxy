@@ -1,3 +1,6 @@
+env-name: prod-fss
+logs-url: https://logs.adeo.no/app/r/s/1LXoc
+special-type-to-use-in-alertmanager-config: fyllut-sendinn-alerts
 ingresses:
   - https://skjemabygging-proxy.intern.nav.no
   - https://skjemabygging-proxy.prod-fss-pub.nais.io

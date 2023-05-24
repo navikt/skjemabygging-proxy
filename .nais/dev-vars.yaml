@@ -1,3 +1,6 @@
+env-name: dev-fss
+logs-url: https://logs.adeo.no/app/r/s/V2TlQ
+special-type-to-use-in-alertmanager-config: fyllut-sendinn-alerts-dev
 ingresses:
   - https://skjemabygging-proxy.dev.intern.nav.no
   - https://skjemabygging-proxy.dev-fss-pub.nais.io
