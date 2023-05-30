@@ -38,19 +38,10 @@ accessPolicy:
       - application: skjemautfylling-delingslenke
         namespace: skjemadigitalisering
         cluster: dev-gcp
-      - application: skjemautfylling-experimental
-        namespace: skjemadigitalisering
-        cluster: dev-gcp
       - application: skjemautfylling-preprod
         namespace: skjemadigitalisering
         cluster: dev-gcp
       - application: skjemautfylling-preprod-alt
-        namespace: skjemadigitalisering
-        cluster: dev-gcp
-      - application: skjemabygging-formio
-        namespace: skjemadigitalisering
-        cluster: dev-gcp
-      - application: skjemabygging-experimental
         namespace: skjemadigitalisering
         cluster: dev-gcp
       - application: skjemabygging-preprod
