@@ -1,4 +1,4 @@
-FROM navikt/node-express:16
+FROM node:18.16.0-alpine
 
 COPY package.json ./
 COPY yarn.lock ./
