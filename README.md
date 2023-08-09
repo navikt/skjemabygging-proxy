@@ -11,8 +11,8 @@ eksempelvis vil kall til <skjemabygging-proxy-baseurl>/norg2/api/v1/enhet rutes 
 Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da tilgjengelig på "http:localhost:3000",
 appen stiller krav til at følgende variabler er tilgjengelig (verdier hentet fra dev-miljø):
 
-    NORG2_BASE_URL=https://norg2.intern.dev.nav.no
-    FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.intern.dev.nav.no
+    NORG2_BASE_URL=https://norg2.dev.intern.nav.no
+    FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.dev.intern.nav.no
     FOERSTESIDEGENERATOR_API_KEY=<foerstesidegenerator api key>
     STS_TOKEN_URL=https://security-token-service.dev.adeo.no/rest/v1/sts/token
     STS_TOKEN_API_KEY=<sts api key>
