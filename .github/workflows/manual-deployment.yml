@@ -27,9 +27,8 @@ jobs:
           node-version: "18"
           cache: "yarn"
       - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
+        run: |
+          yarn install --frozen-lockfile
       - name: Build and push Docker image
         uses: nais/docker-build-push@v0
         id: docker-build-push
