@@ -1,18 +1,19 @@
-name: Skjemabygging-proxy application
-
+name: Build and deploy
 on:
   push:
     branches:
-      - 'main'
-      - 'dev/*'
-
-env:
-  IMAGE: docker.pkg.github.com/${{ github.repository }}/skjemabygging-proxy:${{ github.sha }}
+      - "main"
+  pull_request:
+    branches:
+      - "main"
 
 jobs:
-  build:
+  build-and-push:
     name: Build and push docker image
     runs-on: ubuntu-latest
+    permissions:
+      contents: "read"
+      id-token: "write"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,31 +27,19 @@ jobs:
         run: |
           yarn test
       - name: Build tag and push Docker image
-        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/dev')
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          docker build --tag ${IMAGE} .
-          docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
-          docker push ${IMAGE}
-
-  deploy-dev:
-    name: Deploy dev-fss
-    needs: build
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/dev')
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
-          RESOURCE: .nais/nais.yaml
-          VARS: .nais/dev-vars.yaml
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: skjemadigitalisering
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: prod
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
 
   deploy-prod:
     name: Deploy prod-fss
-    needs: deploy-dev
+    needs: build-and-push
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:

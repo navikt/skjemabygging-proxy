@@ -11,8 +11,8 @@ eksempelvis vil kall til <skjemabygging-proxy-baseurl>/norg2/api/v1/enhet rutes 
 Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da tilgjengelig på "http:localhost:3000",
 appen stiller krav til at følgende variabler er tilgjengelig (verdier hentet fra dev-miljø):
 
-    NORG2_BASE_URL=https://norg2.dev.intern.nav.no
-    FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.dev.intern.nav.no
+    NORG2_BASE_URL=https://norg2.intern.dev.nav.no
+    FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.intern.dev.nav.no
     FOERSTESIDEGENERATOR_API_KEY=<foerstesidegenerator api key>
     STS_TOKEN_URL=https://security-token-service.dev.adeo.no/rest/v1/sts/token
     STS_TOKEN_API_KEY=<sts api key>
@@ -38,7 +38,4 @@ Man kan sette env til development for å slippe Azure autentisering.
 Førstesidegenerator- og STS-relaterte variabler finnes i kubernetes secrets for skjemabygging-proxy.
 
 ## Deployment
-Applikasjonen benytter seg av github actions for deployment. Ved push som inneholder endringer i branch 
-"main" eller "dev/*" vil applikasjonen bygges på et dockerimage og ny versjon vil deployes ut til NAIS.
-
-Endringer på "main" branch vil deployes ut til både "dev-gcp" og "prod-gcp" mens endringer i en "dev/*" branch vil bare deployes til "dev-gcp"
+Applikasjonen benytter seg av github actions for deployment. Bruk `manual-deployment` action for manuelle deploys. Endringer på "main" branch vil deployes til "prod-fss". 
