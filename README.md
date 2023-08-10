@@ -38,7 +38,4 @@ Man kan sette env til development for å slippe Azure autentisering.
 Førstesidegenerator- og STS-relaterte variabler finnes i kubernetes secrets for skjemabygging-proxy.
 
 ## Deployment
-Applikasjonen benytter seg av github actions for deployment. Ved push som inneholder endringer i branch 
-"main" eller "dev/*" vil applikasjonen bygges på et dockerimage og ny versjon vil deployes ut til NAIS.
-
-Endringer på "main" branch vil deployes ut til både "dev-gcp" og "prod-gcp" mens endringer i en "dev/*" branch vil bare deployes til "dev-gcp"
+Applikasjonen benytter seg av github actions for deployment. Bruk `manual-deployment` action for manuelle deploys. Endringer på "main" branch vil deployes til "prod-fss". 
