@@ -22,7 +22,7 @@
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
     "morgan": "^1.10.0",
-    "prom-client": "^14.1.1"
+    "prom-client": "^15.1.1"
   },
   "devDependencies": {
     "jest": "^29.7.0",
