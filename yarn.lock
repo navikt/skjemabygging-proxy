@@ -920,6 +920,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@opentelemetry/api@^1.4.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@opentelemetry/api/-/api-1.8.0.tgz#5aa7abb48f23f693068ed2999ae627d2f7d902ec"
+  integrity sha512-I/s6F7yKUDdtMsoBWXJe8Qz40Tui5vsuKCWJEWVL+5q9sSWRzzx6v2KeNsOBEwd94j0eWkpWCH4yB6rZg9Mf0w==
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
@@ -3052,11 +3057,12 @@ pretty-format@^29.7.0:
     ansi-styles "^5.0.0"
     react-is "^18.0.0"
 
-prom-client@^14.1.1:
-  version "14.1.1"
-  resolved "https://registry.yarnpkg.com/prom-client/-/prom-client-14.1.1.tgz#e9bebef0e2269bfde22a322f4ca803cb52b4a0c0"
-  integrity sha512-hFU32q7UZQ59bVJQGUtm3I2PrJ3gWvoCkilX9sF165ks1qflhugVCeK+S1JjJYHvyt3o5kj68+q3bchormjnzw==
+prom-client@^15.1.1:
+  version "15.1.1"
+  resolved "https://registry.yarnpkg.com/prom-client/-/prom-client-15.1.1.tgz#71ba84371241acd173181b04a436782c246f3652"
+  integrity sha512-GVA2H96QCg2q71rjc3VYvSrVG7OpnJxyryC7dMzvfJfpJJHzQVwF3TJLfHzKORcwJpElWs1TwXLthlJAFJxq2A==
   dependencies:
+    "@opentelemetry/api" "^1.4.0"
     tdigest "^0.1.1"
 
 prompts@^2.0.1:
