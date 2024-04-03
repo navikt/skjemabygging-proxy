@@ -18,7 +18,7 @@
     "express-correlation-id": "^2.0.1",
     "express-prom-bundle": "^6.6.0",
     "http-proxy-middleware": "^2.0.6",
-    "https-proxy-agent": "^5.0.1",
+    "https-proxy-agent": "^7.0.4",
     "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.1.0",
     "morgan": "^1.10.0",
