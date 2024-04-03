@@ -1,4 +1,4 @@
-FROM node:18.16.0-alpine
+FROM node:20-alpine
 
 COPY package.json ./
 COPY yarn.lock ./
