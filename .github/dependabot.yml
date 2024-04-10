@@ -12,6 +12,10 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
+    ignore:
+      - dependency-name: "mock-jwks"
+      # Ignore mock-jwks v3, because it's incompatible with nock
+      versions: "3.x"
 
   - package-ecosystem: 'github-actions'
     directory: '/'

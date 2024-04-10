@@ -1,12 +1,12 @@
-const express = require('express');
-const morgan = require("morgan");
-const promBundle = require("express-prom-bundle");
-const ecsFormat = require('@elastic/ecs-morgan-format')
-const correlator = require('express-correlation-id');
-const actuators = require('./actuators.js')
-const config = require('./config');
-const proxyApi = require('./proxyApi.js')
-const {logError} = require("./utils/log");
+import express from 'express';
+import morgan from "morgan";
+import promBundle from "express-prom-bundle";
+import ecsFormat from '@elastic/ecs-morgan-format';
+import correlator from 'express-correlation-id';
+import {setupAcuators} from './actuators.js';
+import config from './config';
+import { setupProxy } from './proxyApi.js';
+import { logError } from "./utils/log";
 
 // Create Express Server
 const app = express();
@@ -47,8 +47,8 @@ const metricsMiddleware = promBundle({
 // add the prometheus middleware to all routes
 app.use(metricsMiddleware)
 
-proxyApi.setupProxy(app);
-actuators.setupAcuators(app);
+setupProxy(app);
+setupAcuators(app);
 
 app.use((err, req, res, next) => {
     logError({message: err.message});
@@ -57,4 +57,4 @@ app.use((err, req, res, next) => {
     res.send({ message: err.message, correlation_id });
 });
 
-module.exports = app;
+export default app;

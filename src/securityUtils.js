@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const jwksClient = require('jwks-rsa');
-const {HttpsProxyAgent} = require("https-proxy-agent");
-const {logDebug, logInfo} = require("./utils/log");
+import jwt from 'jsonwebtoken';
+import jwksClient from 'jwks-rsa';
+import {HttpsProxyAgent} from "https-proxy-agent";
+import { logDebug, logInfo } from "./utils/log";
 
-function authenticateToken(req, res, next) {
+export function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
@@ -66,5 +66,3 @@ function getKey(header, callback) {
         }
     });
 }
-
-exports.authenticateToken = authenticateToken;

@@ -1,6 +1,6 @@
-const config = require("../config.js");
-const axios = require("axios");
-const {logError, logDebug} = require("../utils/log");
+import config from "../config.js";
+import axios from "axios";
+import { logError, logDebug } from "../utils/log";
 
 const fetchNewTicket = async () => {
     try {
@@ -28,6 +28,6 @@ const exstreamTokenHandler = async (req, res, next) => {
     }
 }
 
-module.exports = {
+export {
     exstreamTokenHandler,
 }

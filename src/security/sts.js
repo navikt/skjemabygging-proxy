@@ -1,10 +1,10 @@
-const axios = require("axios");
-const jwt = require("jsonwebtoken");
-const config = require("../config");
+import axios from "axios";
+import jwt from "jsonwebtoken";
+import config from "../config";
 
 const HEADER_STS_TOKEN = "StsToken";
 const URL = config.stsTokenUrl + "?grant_type=client_credentials&scope=openid";
-const {logError} = require("../utils/log");
+import { logError } from "../utils/log";
 
 const fetchStsToken = async () => {
     const response = await axios.get(URL, {
@@ -63,7 +63,7 @@ const clearStsToken = () => {
     stsToken = undefined;
 }
 
-module.exports = {
+export {
     clearStsToken,
     getStsToken,
     stsTokenHandler,

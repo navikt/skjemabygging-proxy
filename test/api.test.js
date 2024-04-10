@@ -1,8 +1,8 @@
-const nock = require("nock");
-const supertest = require("supertest");
-const app = require("../src/server");
-const securityTestUtils = require("./securityTestUtils.js");
-const {STS_TEST_HOST, STS_TOKEN_URL_PATH} = require("./stsTestUtils");
+import nock from "nock";
+import supertest from "supertest";
+import app from "../src/server";
+import { getToken, getDefaultClaims } from "./securityTestUtils.js"
+import {STS_TEST_HOST, STS_TOKEN_URL_PATH} from "./stsTestUtils"
 
 describe("api", () => {
 
@@ -15,7 +15,7 @@ describe("api", () => {
             .reply(200, response);
 
         await supertest(app).get("/norg2/api")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
+            .set('Authorization', 'Bearer '+getToken(getDefaultClaims()))
             .expect(200)
             .then((res) =>
                 expect(JSON.stringify(res.body)).toBe(JSON.stringify(response))
@@ -31,7 +31,7 @@ describe("api", () => {
             .reply(200, response);
 
         await supertest(app).get("/oppdaterenhetsinfo/api/hentenheter")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
+            .set('Authorization', 'Bearer '+getToken(getDefaultClaims()))
             .expect(200)
             .then((res) =>
                 expect(JSON.stringify(res.body)).toBe(JSON.stringify(response))
@@ -51,7 +51,7 @@ describe("api", () => {
             .reply(200, response);
 
         await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
+            .set('Authorization', 'Bearer '+getToken(getDefaultClaims()))
             .expect(200)
             .then((res) =>
                 expect(JSON.stringify(res.body)).toBe(JSON.stringify(response))

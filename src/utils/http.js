@@ -1,4 +1,4 @@
-const {logError} = require("./log");
+import {logError} from "./log";
 const parseResponseBody = (res, contentType = "") => {
     return new Promise((resolve) => {
         try {
@@ -25,6 +25,6 @@ const logProxyResError = async (proxyRes, req) => {
     }
 };
 
-module.exports = {
+export {
     logProxyResError,
 }

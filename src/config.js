@@ -14,5 +14,4 @@ const config = {
     exstreamPassword: process.env.EXSTREAM_PASSWORD,
     logLevel: process.env.PROXY_LOG_LEVEL || "info",
 }
-
-module.exports = config;
+export default config;

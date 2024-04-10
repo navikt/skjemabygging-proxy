@@ -1,7 +1,12 @@
-const jwksMock = require('mock-jwks').default(process.env.JWKS_BASEURL, process.env.JWKS_PATH);
+import createJWKSMock  from 'mock-jwks'
+const jwksMock = createJWKSMock(
+    process.env.JWKS_BASEURL,
+    process.env.JWKS_PATH
+);
+
 jwksMock.start()
 
-exports.getDefaultClaims = () => {
+export const getDefaultClaims = () => {
     return {
         aud: process.env.AZURE_APP_CLIENT_ID,
         iss: process.env.AZURE_OPENID_CONFIG_ISSUER,
@@ -11,6 +16,6 @@ exports.getDefaultClaims = () => {
     }
 }
 
-exports.getToken = (claims) => {
+export const getToken = (claims) => {
     return  jwksMock.token(claims);
 }

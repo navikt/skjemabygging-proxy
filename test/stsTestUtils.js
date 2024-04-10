@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 const STS_TEST_HOST = "https://security-token-service.testhost.no";
 const STS_TOKEN_URL_PATH = "/rest/v1/sts/token?grant_type=client_credentials&scope=openid";
 
@@ -8,7 +8,7 @@ function createStsToken(data, expiresIn) {
     }, 'secret', {expiresIn});
 }
 
-module.exports = {
+export {
     STS_TEST_HOST,
     STS_TOKEN_URL_PATH,
     createStsToken,

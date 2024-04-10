@@ -1,14 +1,16 @@
-const {createProxyMiddleware} = require('http-proxy-middleware');
-const securityUtils = require('./securityUtils.js');
-const config = require('./config');
-const {stsTokenHandler, HEADER_STS_TOKEN} = require("./security/sts");
-const {exstreamTokenHandler} = require("./security/exstreamAuth");
-const {logProxyResError} = require("./utils/http");
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { authenticateToken } from './securityUtils.js'
+import config from './config';
+import { stsTokenHandler, HEADER_STS_TOKEN } from "./security/sts"
+import { exstreamTokenHandler } from "./security/exstreamAuth"
 
-function setupProxy(app) {
+
+import { logProxyResError } from "./utils/http";
+
+export function setupProxy(app) {
 
     // Proxy endpoints
-    app.use('/foersteside', securityUtils.authenticateToken, stsTokenHandler, createProxyMiddleware({
+    app.use('/foersteside', authenticateToken, stsTokenHandler, createProxyMiddleware({
         target: config.forstesidegeneratorBaseUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
@@ -22,7 +24,7 @@ function setupProxy(app) {
             '^/': '/api/foerstesidegenerator/v1/', // add base path
         }
     }));
-    app.use('/norg2', securityUtils.authenticateToken, createProxyMiddleware({
+    app.use('/norg2', authenticateToken, createProxyMiddleware({
         target: config.norg2BaseUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
@@ -32,20 +34,20 @@ function setupProxy(app) {
         }),
         onProxyRes: logProxyResError,
     }));
-    app.use('/oppdaterenhetsinfo', securityUtils.authenticateToken, createProxyMiddleware({
+    app.use('/oppdaterenhetsinfo', authenticateToken, createProxyMiddleware({
         target: config.oppdaterenhetsinfoBaseUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
-    app.use('/kodeverk', securityUtils.authenticateToken, createProxyMiddleware({
+    app.use('/kodeverk', authenticateToken, createProxyMiddleware({
         target: config.kodeverkUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
     }));
 
-    app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, createProxyMiddleware({
+    app.use('/exstream', authenticateToken, exstreamTokenHandler, createProxyMiddleware({
         target: config.exstreamBaseUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
@@ -55,6 +57,3 @@ function setupProxy(app) {
         }
     }));
 }
-
-
-exports.setupProxy = setupProxy;

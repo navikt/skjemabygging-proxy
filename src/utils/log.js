@@ -1,5 +1,5 @@
-const correlation = require("express-correlation-id");
-const config = require('../config');
+import correlation from "express-correlation-id";
+import config from "../config";
 
 const levels = {
     "debug": 1,
@@ -50,7 +50,7 @@ const createLog = (message, level) => {
     });
 };
 
-module.exports = {
+export {
     logDebug,
     logInfo,
     logWarn,

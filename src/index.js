@@ -1,7 +1,7 @@
-const dotenv = require('dotenv');
-const dotEnvExpand = require('dotenv-expand');
-const app = require('./server.js')
-const {logInfo} = require("./utils/log");
+import dotenv from 'dotenv';
+import dotEnvExpand from 'dotenv-expand';
+import app from './server.js';
+import { logInfo } from "./utils/log";
 
 dotEnvExpand.expand(dotenv.config());
 

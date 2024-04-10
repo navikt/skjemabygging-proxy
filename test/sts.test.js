@@ -1,6 +1,6 @@
-const nock = require("nock");
-const { getStsToken, clearStsToken } = require("../src/security/sts");
-const {STS_TEST_HOST, STS_TOKEN_URL_PATH, createStsToken} = require("./stsTestUtils");
+import nock from "nock";
+import { getStsToken, clearStsToken } from "../src/security/sts";
+import { STS_TEST_HOST, STS_TOKEN_URL_PATH, createStsToken } from "./stsTestUtils";
 
 describe("STS token", () => {
 
