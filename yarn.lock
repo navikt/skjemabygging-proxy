@@ -2805,10 +2805,10 @@ minimatch@^3.0.4, minimatch@^3.1.1, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-mock-jwks@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/mock-jwks/-/mock-jwks-1.0.9.tgz#daab2f4ba400719d19e3999a8d41002ce9769e5e"
-  integrity sha512-kshOXv5h5hA5bGR0Mb2S24GFdKkFvrWoRTv3phLRKH/HRu/UoPUx0zJLAorOE8SmFtGsfOTPFD7jfQD5Y9ZlZA==
+mock-jwks@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/mock-jwks/-/mock-jwks-1.0.10.tgz#42ce54bdb18683da1b70fce143d071df8abe0cff"
+  integrity sha512-4lzUWNwxCmmScxTg/RlziPFeKtdnLLzwVuMspk+FJb3hwt+Nj8z3WTcKtpyleCRHcjMlbaGBPA6f6e0NKw+fmA==
   dependencies:
     base64-url "^2.3.3"
     jsonwebtoken "^9.0.0"
