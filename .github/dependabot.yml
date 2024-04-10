@@ -12,6 +12,10 @@ updates:
         update-types:
           - 'minor'
           - 'patch'
+    ignore:
+      - dependency-name: "mock-jwks"
+        # Ignore new major versions of mock-jwks, because it's incompatible with cjs(from v2), and nock(from v3)
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: 'github-actions'
     directory: '/'
