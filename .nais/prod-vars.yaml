@@ -20,9 +20,9 @@ env:
   - name: KODEVERK_URL
     value: https://kodeverk-api.nav.no/api/v1
   - name: EXSTREAM_BASE_URL
-    value: https://dokument.adeo.no
+    value: https://dokument1.adeo.no
   - name: EXSTREAM_TICKET_BASE_URL
-    value: https://otds.adeo.no
+    value: https://dokument1.adeo.no/otdstenant/tenant1
   - name: EXSTREAM_USERNAME
     value: edp_skjemabygger
 azure:
