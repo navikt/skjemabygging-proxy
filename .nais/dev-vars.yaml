@@ -22,7 +22,7 @@ env:
   - name: EXSTREAM_BASE_URL
     value: https://dokument1-q.adeo.no
   - name: EXSTREAM_TICKET_BASE_URL
-    value: https://dokument1.adeo.no/otdstenant/tenant1
+    value: https://dokument1-q.adeo.no/otdstenant/tenant1
   - name: EXSTREAM_USERNAME
     value: edp_skjemabygger_test
 azure:
