@@ -37,12 +37,14 @@ function setupProxy(app) {
         changeOrigin: true,
         logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyRes: logProxyResError,
     }));
     app.use('/kodeverk', securityUtils.authenticateToken, createProxyMiddleware({
         target: config.kodeverkUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyRes: logProxyResError,
     }));
 
     app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, createProxyMiddleware({
@@ -50,6 +52,7 @@ function setupProxy(app) {
         changeOrigin: true,
         logLevel: config.logLevel,
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
+        onProxyRes: logProxyResError,
         pathRewrite: {
             '^/exstream': '/tenant1/sgw/v1/communications?name=ccm_service_html_to_pdf&version=1',
         }
