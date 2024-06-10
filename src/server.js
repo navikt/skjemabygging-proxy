@@ -54,7 +54,7 @@ app.use((err, req, res, next) => {
     logError({message: err.message});
     res.status(500);
     res.contentType("application/json");
-    res.send({ message: err.message, correlation_id });
+    res.send({ message: err.message, correlation_id: correlator.getId() });
 });
 
 module.exports = app;

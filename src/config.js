@@ -10,6 +10,7 @@ const config = {
     foerstesidegeneratorApiKey: process.env.FOERSTESIDEGENERATOR_API_KEY,
     kodeverkUrl: process.env.KODEVERK_URL,
     exstreamBaseUrl: process.env.EXSTREAM_BASE_URL,
+    exstreamTicketBaseUrl: process.env.EXSTREAM_TICKET_BASE_URL,
     exstreamUsername: process.env.EXSTREAM_USERNAME,
     exstreamPassword: process.env.EXSTREAM_PASSWORD,
     logLevel: process.env.PROXY_LOG_LEVEL || "info",

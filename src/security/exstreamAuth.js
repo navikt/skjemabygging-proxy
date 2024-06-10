@@ -4,7 +4,7 @@ const {logError, logDebug} = require("../utils/log");
 
 const fetchNewTicket = async () => {
     try {
-        const ticketUrl = `${config.exstreamBaseUrl}/otdstenant/tenant1/otdsws/rest/authentication/credentials`;
+        const ticketUrl = `${config.exstreamTicketBaseUrl}/otdsws/rest/authentication/credentials`;
         const response = await axios.post(ticketUrl, {
             "userName": config.exstreamUsername,
             "password": config.exstreamPassword,
