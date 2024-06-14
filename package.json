@@ -16,7 +16,7 @@
     "dotenv-expand": "^11.0.6",
     "express": "^4.19.2",
     "express-correlation-id": "^2.0.1",
-    "express-prom-bundle": "^6.6.0",
+    "express-prom-bundle": "^7.0.0",
     "http-proxy-middleware": "^3.0.0",
     "https-proxy-agent": "^7.0.4",
     "jsonwebtoken": "^9.0.2",
