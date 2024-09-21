@@ -14,7 +14,7 @@
     "axios": "^1.7.4",
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
-    "express": "^4.19.2",
+    "express": "^4.20.0",
     "express-correlation-id": "^2.0.1",
     "express-prom-bundle": "^7.0.0",
     "http-proxy-middleware": "^3.0.0",
