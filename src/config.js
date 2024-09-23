@@ -8,7 +8,6 @@ const config = {
     serviceUserUsername: process.env.SERVICEUSER_USERNAME,
     serviceUserPassword: process.env.SERVICEUSER_PASSWORD,
     foerstesidegeneratorApiKey: process.env.FOERSTESIDEGENERATOR_API_KEY,
-    kodeverkUrl: process.env.KODEVERK_URL,
     exstreamBaseUrl: process.env.EXSTREAM_BASE_URL,
     exstreamTicketBaseUrl: process.env.EXSTREAM_TICKET_BASE_URL,
     exstreamUsername: process.env.EXSTREAM_USERNAME,
