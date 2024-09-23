@@ -1,17 +1,15 @@
 # skjemabygging-proxy
 
 skjemabygging-proxy er en applikasjon bygget med nodejs/express med hensikt av å gi skjemabygging-appene tilgang til å
-kalle systemer som kjører i fagsystemsonen, f.eks. norg2 eller foerstesidegeneratoren.
+kalle systemer som kjører i fagsystemsonen, f.eks. exstream eller foerstesidegeneratoren.
 
 ## Funksjonalitet
-applikasjonen eksponerer et endepunkt på /norg2 som ruter alle kall videre til norg2.
-eksempelvis vil kall til <skjemabygging-proxy-baseurl>/norg2/api/v1/enhet rutes til <norg2-baseurl>/norg2/api/v1/enhet
+Applikasjonen eksponerer ulike endepunkt og ruter forespørselen videre til applikasjoner som kjører i fss.
 
 ## Lokalkjøring
 Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da tilgjengelig på "http:localhost:3000",
 appen stiller krav til at følgende variabler er tilgjengelig (verdier hentet fra dev-miljø):
 
-    NORG2_BASE_URL=https://norg2.dev.intern.nav.no
     FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.dev.intern.nav.no
     FOERSTESIDEGENERATOR_API_KEY=<foerstesidegenerator api key>
     STS_TOKEN_URL=https://security-token-service.dev.adeo.no/rest/v1/sts/token
@@ -25,7 +23,6 @@ appen stiller krav til at følgende variabler er tilgjengelig (verdier hentet fr
     EXSTREAM_BASE_URL=https://dokument1-q.adeo.no
     EXSTREAM_USERNAME=tenantadmin@strs.role
     EXSTREAM_PASSWORD=
-    NORG2_CONSUMER_ID=srvskjemabygging
 
 JWKS_URI og ISSUER kan hentes fra https://login.microsoftonline.com/966ac572-f5b7-4bbe-aa88-c76419c0f851/v2.0/.well-known/openid-configuration,
 og CLIENT_ID for proxy finnes slik: https://security.labs.nais.io/pages/idp/azure-ad.html#hvordan-finne-clientid-for-applikasjoner
