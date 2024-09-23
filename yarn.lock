@@ -1549,12 +1549,10 @@ cookiejar@^2.1.4:
   resolved "https://registry.yarnpkg.com/cookiejar/-/cookiejar-2.1.4.tgz#ee669c1fea2cf42dc31585469d193fef0d65771b"
   integrity sha512-LDx6oHrK+PhzLKJU9j5S7/Y3jM/mUHvD/DeI1WQmJn652iPC5Y4TBzC9l+5OMOXlyTTA+SmVUPm0HQUwpD5Jqw==
 
-correlation-id@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/correlation-id/-/correlation-id-4.0.0.tgz#c1d3038e5f30d7bfeae5728ff96f27a7506bc2c0"
-  integrity sha512-WvXtJBlovvOBKqTz/YwWP2gm6CXJZJArfGimp9s/ehmhJMPFbmnPMQe3K60Q9idGNixMvKojMjleyDhZEFdHfg==
-  dependencies:
-    uuid "^8.3.1"
+correlation-id@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/correlation-id/-/correlation-id-5.2.0.tgz#5b23e507a928cebca45d146308b0060cb4783a86"
+  integrity sha512-qTsYujgBvWIx05qF9HV4+KoezGTelgqJiFnyEfRsEqjpQUZdWnraOGHD+IMep7lPFg6MiI55fvpC4qruKdY5Dw==
 
 create-jest@^29.7.0:
   version "29.7.0"
@@ -1783,12 +1781,12 @@ expect@^29.7.0:
     jest-message-util "^29.7.0"
     jest-util "^29.7.0"
 
-express-correlation-id@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/express-correlation-id/-/express-correlation-id-2.0.1.tgz#f7f66af3dd7daf76e3ab3a67d7148784e9fe56bd"
-  integrity sha512-jUxALLTg01TxUffi2jQ3IYO8WTxZL+oJUefLeGQ3XLBwpKZck6+aGvM25akrmQ1Kewhv5bfLgeqcHPrtT6YOxw==
+express-correlation-id@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/express-correlation-id/-/express-correlation-id-3.0.1.tgz#e41aa41b4b478d936390361b09d3a5ef97e9b101"
+  integrity sha512-H0dWSFiW8IRfqhBzK+Rx4dD1wU0d6SWZD4z4Pzs04lYBrVvHo8thQK4WzpXBptCDLQ+xCeb7bklB6rPjV7Q37A==
   dependencies:
-    correlation-id "^4.0.0"
+    correlation-id "^5.2.0"
 
 express-prom-bundle@^7.0.0:
   version "7.0.0"
@@ -3573,11 +3571,6 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
-
-uuid@^8.3.1:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 v8-to-istanbul@^9.0.1:
   version "9.0.1"
