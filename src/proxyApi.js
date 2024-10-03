@@ -39,13 +39,6 @@ function setupProxy(app) {
         onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
         onProxyRes: logProxyResError,
     }));
-    app.use('/kodeverk', securityUtils.authenticateToken, legacyCreateProxyMiddleware({
-        target: config.kodeverkUrl,
-        changeOrigin: true,
-        logLevel: config.logLevel,
-        onProxyReq: (proxyReq => proxyReq.removeHeader('authorization')),
-        onProxyRes: logProxyResError,
-    }));
 
     app.use('/exstream', securityUtils.authenticateToken, exstreamTokenHandler, legacyCreateProxyMiddleware({
         target: config.exstreamBaseUrl,

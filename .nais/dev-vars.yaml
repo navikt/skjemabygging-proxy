@@ -17,8 +17,6 @@ env:
     value: http://security-token-service.default.svc.nais.local/rest/v1/sts/token
   - name: SERVICEUSER_USERNAME
     value: srvsoknadsveiviser
-  - name: KODEVERK_URL
-    value: https://kodeverk-api.nav.no/api/v1
   - name: EXSTREAM_BASE_URL
     value: https://dokument1-q.adeo.no
   - name: EXSTREAM_TICKET_BASE_URL
