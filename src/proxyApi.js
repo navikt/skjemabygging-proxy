@@ -22,16 +22,7 @@ function setupProxy(app) {
             '^/': '/api/foerstesidegenerator/v1/', // add base path
         }
     }));
-    app.use('/norg2', securityUtils.authenticateToken, legacyCreateProxyMiddleware({
-        target: config.norg2BaseUrl,
-        changeOrigin: true,
-        logLevel: config.logLevel,
-        onProxyReq: (proxyReq => {
-            proxyReq.removeHeader('authorization');
-            proxyReq.setHeader("consumerId", config.norg2ConsumerId);
-        }),
-        onProxyRes: logProxyResError,
-    }));
+
     app.use('/oppdaterenhetsinfo', securityUtils.authenticateToken, legacyCreateProxyMiddleware({
         target: config.oppdaterenhetsinfoBaseUrl,
         changeOrigin: true,

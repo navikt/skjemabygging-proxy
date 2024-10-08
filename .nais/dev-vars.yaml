@@ -5,10 +5,6 @@ ingresses:
   - https://skjemabygging-proxy.intern.dev.nav.no
   - https://skjemabygging-proxy.dev-fss-pub.nais.io
 env:
-  - name: NORG2_BASE_URL
-    value: https://norg2.dev.intern.nav.no
-  - name: NORG2_CONSUMER_ID
-    value: srvskjemabygging
   - name: OPPDATERENHETSINFO_BASE_URL
     value: http://oppdaterenhetsinfo
   - name: FOERSTESIDEGENERATOR_BASE_URL
