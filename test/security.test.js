@@ -8,46 +8,34 @@ describe("security", () => {
 
     beforeEach(() => {
         nock(STS_TEST_HOST)
-          .get(STS_TOKEN_URL_PATH)
-          .reply(200, {access_token: "sts-access-token"});
+            .get(STS_TOKEN_URL_PATH)
+            .reply(200, {access_token: "sts-access-token"});
         nock(process.env.FOERSTESIDEGENERATOR_BASE_URL)
-          .get("/api/foerstesidegenerator/v1/foersteside")
-          .reply(200)
+            .get("/api/foerstesidegenerator/v1/foersteside")
+            .reply(200)
     });
 
-    test("Valid token", async () => {
+    test("Returns 200 OK when token is valid", async () => {
+        nock(process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT)
+            .post(/.*/)
+            .reply(200, {active: true});
         await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
-            .expect(200)
+            .set('Authorization', securityTestUtils.mockAuthHeader)
+            .expect(200);
+    })
+
+    test("Returns 403 Forbidden when token is missing", async () => {
+        await supertest(app).get("/foersteside")
+            .expect(403);
     });
 
-    test("Missing token", async () => {
+    test("Returns 401 Unauthorized when token is invalid", async () => {
+        nock(process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT)
+            .post(/.*/)
+            .reply(200, {active: false, error: "invalid"});
         await supertest(app).get("/foersteside")
-            .expect(403)
-    });
-
-    test("Invalid audience", async () => {
-        await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims().aud = "INVALID_AUDIENCE"))
-            .expect(401)
-    });
-
-    test("Invalid issuer", async () => {
-        await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims().iss = "INVALID_ISSUER"))
-            .expect(401)
-    });
-
-    test("Expired token", async () => {
-        await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims().exp = Math.floor(Date.now()/1000 - 60)))
-            .expect(401)
-    });
-
-    test("Invalid nbf", async () => {
-        await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims().nbf = Math.floor(Date.now()/1000 + 60)))
-            .expect(401)
+            .set('Authorization', securityTestUtils.mockAuthHeader)
+            .expect(401);
     });
 
 });
