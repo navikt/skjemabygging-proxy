@@ -31,13 +31,13 @@ async function authenticateToken(req, res, next) {
         });
 
         if (!response.ok) {
-            logError({message: "Token introspection failed", url: req.originalUrl, response});
-            next(new Error("Token introspection failed"));
+            logInfo({message: "Token introspection failed", originalUrl: req.originalUrl, httpStatus: response.status, responseBody: await response.text()});
+            return next(new Error("Token introspection failed"));
         }
 
         const validatedToken = await response.json();
         if (!validatedToken.active) {
-            logInfo({message: `Token is not valid: ${validatedToken.error}`, url: req.originalUrl, response});
+            logInfo({message: `Token is not valid: ${validatedToken.error}`, url: req.originalUrl});
             return res.status(401).send({
                 "timestamp": Date.now(),
                 "status": 401,

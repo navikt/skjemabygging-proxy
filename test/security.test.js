@@ -38,4 +38,13 @@ describe("security", () => {
             .expect(401);
     });
 
+    test("Returns 500 when token cannot be validated", async () => {
+        nock(process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT)
+            .post(/.*/)
+            .reply(500);
+        await supertest(app).get("/foersteside")
+            .set('Authorization', securityTestUtils.mockAuthHeader)
+            .expect(500);
+    });
+
 });
