@@ -1,9 +1,6 @@
-const dotenv = require('dotenv');
-const dotEnvExpand = require('dotenv-expand');
+require('dotenv-expand').expand(require('dotenv').config());
 const app = require('./server.js')
 const {logInfo} = require("./utils/log");
-
-dotEnvExpand.expand(dotenv.config());
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";

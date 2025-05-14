@@ -6,6 +6,12 @@ const {STS_TEST_HOST, STS_TOKEN_URL_PATH} = require("./stsTestUtils");
 
 describe("api", () => {
 
+    beforeEach(() => {
+        nock(process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT)
+            .post(/.*/)
+            .reply(200, {active: true});
+    })
+
     test("Oppdaterenhetsinfo: Test proxied api response", async () => {
 
         const response = { testObject: '12345'};
@@ -15,7 +21,7 @@ describe("api", () => {
             .reply(200, response);
 
         await supertest(app).get("/oppdaterenhetsinfo/api/hentenheter")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
+            .set('Authorization', securityTestUtils.mockAuthHeader)
             .expect(200)
             .then((res) =>
                 expect(JSON.stringify(res.body)).toBe(JSON.stringify(response))
@@ -35,7 +41,7 @@ describe("api", () => {
             .reply(200, response);
 
         await supertest(app).get("/foersteside")
-            .set('Authorization', 'Bearer '+securityTestUtils.getToken(securityTestUtils.getDefaultClaims()))
+            .set('Authorization', securityTestUtils.mockAuthHeader)
             .expect(200)
             .then((res) =>
                 expect(JSON.stringify(res.body)).toBe(JSON.stringify(response))
