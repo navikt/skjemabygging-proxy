@@ -11,9 +11,6 @@ spec:
   image: {{image}}
   port: 3000
   observability:
-    autoInstrumentation:
-      enabled: true
-      runtime: nodejs
     logging:
       destinations:
         - id: loki
@@ -62,8 +59,6 @@ spec:
     enabled: true
     path: internal/prometheus
   env:
-      - name: NO_PROXY
-        value: "*.nais-system"
   {{#each env}}
       - name: {{this.name}}
         value: {{this.value}}
