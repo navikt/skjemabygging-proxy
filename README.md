@@ -1,7 +1,7 @@
 # skjemabygging-proxy
 
 skjemabygging-proxy er en applikasjon bygget med nodejs/express med hensikt av å gi skjemabygging-appene tilgang til å
-kalle systemer som kjører i fagsystemsonen, f.eks. exstream eller foerstesidegeneratoren.
+kalle systemer som kjører i fagsystemsonen, f.eks. foerstesidegeneratoren.
 
 ## Funksjonalitet
 Applikasjonen eksponerer ulike endepunkt og ruter forespørselen videre til applikasjoner som kjører i fss.
@@ -17,10 +17,6 @@ Man må opprette en .env-fil og sette NODE_ENV til development for å slippe Azu
     SERVICEUSER_USERNAME=srvsoknadsveiviser
     SERVICEUSER_PASSWORD=<serviceuser password>
     NAIS_TOKEN_INTROSPECTION_ENDPOINT=https://token-introspection.nais.no
-    OPPDATERENHETSINFO_BASE_URL=<oppdaterer base url>
-    EXSTREAM_BASE_URL=https://dokument1-q.adeo.no
-    EXSTREAM_USERNAME=tenantadmin@strs.role
-    EXSTREAM_PASSWORD=
     NODE_ENV=development
 
 Førstesidegenerator- og STS-relaterte variabler finnes i kubernetes secrets for skjemabygging-proxy.

@@ -2,20 +2,12 @@ ingresses:
   - https://skjemabygging-proxy.intern.nav.no
   - https://skjemabygging-proxy.prod-fss-pub.nais.io
 env:
-  - name: OPPDATERENHETSINFO_BASE_URL
-    value: http://oppdaterenhetsinfo
   - name: FOERSTESIDEGENERATOR_BASE_URL
     value: https://foerstesidegenerator.intern.nav.no
   - name: STS_TOKEN_URL
     value: http://security-token-service.default.svc.nais.local/rest/v1/sts/token
   - name: SERVICEUSER_USERNAME
     value: srvsoknadsveiviser
-  - name: EXSTREAM_BASE_URL
-    value: https://dokument1.adeo.no
-  - name: EXSTREAM_TICKET_BASE_URL
-    value: https://dokument1.adeo.no/otdstenant/tenant1
-  - name: EXSTREAM_USERNAME
-    value: edp_skjemabygger
 azure:
   application:
     tenant: nav.no
