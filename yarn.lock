@@ -1710,17 +1710,10 @@ dezalgo@^1.0.4:
     asap "^2.0.0"
     wrappy "1"
 
-dotenv-expand@^12.0.3:
-  version "12.0.3"
-  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-12.0.3.tgz#6323ceca51ca0c1b1f0055e2aba39c79781739a6"
-  integrity sha512-uc47g4b+4k/M/SeaW1y4OApx+mtLWl92l5LMPP0GNXctZqELk+YGgOPIIC5elYmUH4OuoK3JLhuRUYegeySiFA==
-  dependencies:
-    dotenv "^16.4.5"
-
-dotenv@^16.4.5:
-  version "16.5.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.5.0.tgz#092b49f25f808f020050051d1ff258e404c78692"
-  integrity sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==
+dotenv-expand@1000.0.0:
+  version "1000.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-1000.0.0.tgz#31d8eda97b3a1a81119e60ee89b08c3e133d777d"
+  integrity sha512-3T4TtUjXm5iGKFEirqKjcDJ0EheFJbv9peb5xytC+HNu3l5Ygnu4dYE8yeqkppHMsh1If9C/A//EJu7IPtNu+A==
 
 dotenv@^17.4.2:
   version "17.4.2"
