@@ -1710,7 +1710,7 @@ dezalgo@^1.0.4:
     asap "^2.0.0"
     wrappy "1"
 
-dotenv-expand@1000.0.0:
+dotenv-expand@^1000.0.0:
   version "1000.0.0"
   resolved "https://registry.yarnpkg.com/dotenv-expand/-/dotenv-expand-1000.0.0.tgz#31d8eda97b3a1a81119e60ee89b08c3e133d777d"
   integrity sha512-3T4TtUjXm5iGKFEirqKjcDJ0EheFJbv9peb5xytC+HNu3l5Ygnu4dYE8yeqkppHMsh1If9C/A//EJu7IPtNu+A==
