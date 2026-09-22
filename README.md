@@ -11,6 +11,7 @@ Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da til
 Man må opprette en .env-fil og sette NODE_ENV til development for å slippe Azure autentisering.
 
     FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.dev.intern.nav.no
+    FOERSTESIDEGENERATOR_TIMEOUT_MS=25000
     FOERSTESIDEGENERATOR_API_KEY=<foerstesidegenerator api key>
     STS_TOKEN_URL=https://security-token-service.dev.adeo.no/rest/v1/sts/token
     STS_TOKEN_API_KEY=<sts api key>
@@ -23,3 +24,23 @@ Førstesidegenerator- og STS-relaterte variabler finnes i kubernetes secrets for
 
 ## Deployment
 Applikasjonen benytter seg av github actions for deployment. Bruk `manual-deployment` action for manuelle deploys. Endringer på "main" branch vil deployes til "prod-fss". 
+
+## Monitoring `/foersteside`
+
+The proxy exports `http_request_duration_seconds` with bounded `path`, `method`, and `status_code` labels. A five-minute 500/504 response ratio can be monitored with:
+
+```promql
+sum(rate(http_request_duration_seconds_count{app="skjemabygging-proxy",k8s_cluster_name="prod-fss",path="/foersteside",status_code=~"500|504"}[5m]))
+/
+sum(rate(http_request_duration_seconds_count{app="skjemabygging-proxy",k8s_cluster_name="prod-fss",path="/foersteside"}[5m]))
+```
+
+The configured 25-second timeout is represented in the histogram. Monitor the proportion of requests taking more than 20 seconds with:
+
+```promql
+1 - (
+  sum(rate(http_request_duration_seconds_bucket{app="skjemabygging-proxy",k8s_cluster_name="prod-fss",path="/foersteside",le="20"}[5m]))
+  /
+  sum(rate(http_request_duration_seconds_count{app="skjemabygging-proxy",k8s_cluster_name="prod-fss",path="/foersteside"}[5m]))
+)
+```

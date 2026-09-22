@@ -34,6 +34,7 @@ app.use(morgan((token, req, res) => {
 // Add the options to the prometheus middleware most option are for http_request_duration_seconds histogram metric
 const metricsMiddleware = promBundle({
     metricsPath: "/internal/prometheus",
+    buckets: [0.003, 0.03, 0.1, 0.3, 1.5, 10, 20, 25],
     includeMethod: true,
     includePath: true,
     includeStatusCode: true,
