@@ -4,7 +4,7 @@
   "description": "proxy for fyllut i nais-gcp clusteret",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "start": "nodemon src/index.js"
   },
   "author": "",
