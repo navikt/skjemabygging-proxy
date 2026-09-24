@@ -11,6 +11,8 @@ function setupProxy(app) {
         target: config.forstesidegeneratorBaseUrl,
         changeOrigin: true,
         logLevel: config.logLevel,
+        proxyTimeout: config.foerstesidegeneratorTimeoutMs,
+        timeout: config.foerstesidegeneratorTimeoutMs,
         onProxyReq: (proxyReq => {
             proxyReq.setHeader('Authorization', `Bearer ${proxyReq.getHeader(HEADER_STS_TOKEN)}`);
             proxyReq.setHeader('x-nav-apiKey', config.foerstesidegeneratorApiKey);

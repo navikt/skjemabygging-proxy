@@ -1,4 +1,4 @@
-const {logError} = require("./log");
+const {logError, logWarn} = require("./log");
 const parseResponseBody = (res, contentType = "") => {
     return new Promise((resolve) => {
         try {
@@ -21,7 +21,8 @@ const logProxyResError = async (proxyRes, req) => {
         const contentType = proxyRes.headers["content-type"];
         const proxyResponseBody = await parseResponseBody(proxyRes, contentType);
         const message = `Proxy response error${proxyResponseBody.message ? `: ${proxyResponseBody.message}` : ""}`;
-        logError({message, httpStatus: proxyRes.statusCode, contentType, proxyResponseBody: JSON.stringify(proxyResponseBody), url: req.url});
+        const log = proxyRes.statusCode >= 500 ? logError : logWarn;
+        log({message, httpStatus: proxyRes.statusCode, contentType, proxyResponseBody: JSON.stringify(proxyResponseBody), url: req.url});
     }
 };
 

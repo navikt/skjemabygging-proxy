@@ -4,6 +4,8 @@ ingresses:
 env:
   - name: FOERSTESIDEGENERATOR_BASE_URL
     value: https://foerstesidegenerator.intern.nav.no
+  - name: FOERSTESIDEGENERATOR_TIMEOUT_MS
+    value: "25000"
   - name: STS_TOKEN_URL
     value: http://security-token-service.default.svc.nais.local/rest/v1/sts/token
   - name: SERVICEUSER_USERNAME
