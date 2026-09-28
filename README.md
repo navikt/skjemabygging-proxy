@@ -21,10 +21,13 @@ Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da til
 
 Førstesidegenerator- og STS-relaterte variabler finnes i kubernetes secrets for skjemabygging-proxy.
 
-For local development, create `.env` in the repository root and run `yarn start`.
-The file is optional; provide required settings through your shell when you do not have one.
+For local development, create `.env` in the repository root if you want to keep settings there.
+Run `yarn start` to start the service once, as in production. Run `yarn dev` to restart it when application source files change.
+Stop either command with Ctrl+C in its terminal. Signaling only the Yarn process PID can leave the service running.
+Both commands work without `.env`; provide the required settings through your shell instead.
 Set `NODE_ENV=development` to bypass Azure authentication locally.
-The start command uses `node --env-file-if-exists=.env`, which leaves existing shell variables unchanged.
+`yarn start` uses `node --env-file-if-exists=.env`; `yarn dev` loads the same optional file before starting the watched application.
+Both leave existing shell variables unchanged.
 Use literal values in `.env`. Node does not expand `${VAR}` references or run `$(command)`.
 Tests load `test/test.env` instead of your root `.env`.
 The Docker entrypoint runs `node src/index.js` and uses environment variables supplied by NAIS.

@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "nodemon --exec \"node --env-file-if-exists=.env\" src/index.js"
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "dev": "node --watch --import ./src/loadEnv.js src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +24,6 @@
   "devDependencies": {
     "jest": "^30.5.1",
     "nock": "^14.0.17",
-    "nodemon": "^3.1.14",
     "supertest": "^7.2.2"
   },
   "resolutions": {
