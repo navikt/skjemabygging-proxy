@@ -1,5 +1,5 @@
 // Info GET endpoints
-const {logInfo} = require("./utils/log");
+import {logInfo} from "./utils/log.js";
 
 function setupAcuators(app) {
     app.get('/internal/health/liveness', (req, res, next) => {
@@ -17,4 +17,4 @@ function setupAcuators(app) {
     logInfo('Readiness available on /internal/health/readiness')
 }
 
-exports.setupAcuators = setupAcuators;
+export {setupAcuators};

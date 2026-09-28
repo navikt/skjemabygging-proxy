@@ -1,8 +1,8 @@
-const {describe, before, after, beforeEach, it} = require("node:test");
-const assert = require("node:assert/strict");
-const jwt = require("jsonwebtoken");
-const supertest = require("supertest");
-const {createFixtureServer, json} = require("./fixtureServer");
+import {describe, before, after, beforeEach, it} from "node:test";
+import assert from "node:assert/strict";
+import jwt from "jsonwebtoken";
+import supertest from "supertest";
+import {createFixtureServer, json} from "./fixtureServer.js";
 
 describe("authentication", () => {
     let introspection;
@@ -19,8 +19,8 @@ describe("authentication", () => {
         process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT = `${introspection.url}/introspect`;
         process.env.STS_TOKEN_URL = `${sts.url}/rest/v1/sts/token`;
         process.env.FOERSTESIDEGENERATOR_BASE_URL = generator.url;
-        app = require("../src/server");
-        ({clearStsToken} = require("../src/security/sts"));
+        ({default: app} = await import("../src/server.js"));
+        ({clearStsToken} = await import("../src/security/sts.js"));
     });
 
     after(async () => {

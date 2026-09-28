@@ -1,4 +1,4 @@
-const { existsSync } = require('node:fs');
+import {existsSync} from "node:fs";
 
 if (existsSync('.env')) {
     process.loadEnvFile('.env');

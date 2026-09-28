@@ -1,8 +1,8 @@
-const {describe, before, after, beforeEach, it} = require("node:test");
-const assert = require("node:assert/strict");
-const jwt = require("jsonwebtoken");
-const supertest = require("supertest");
-const {createFixtureServer, json} = require("./fixtureServer");
+import {describe, before, after, beforeEach, it} from "node:test";
+import assert from "node:assert/strict";
+import jwt from "jsonwebtoken";
+import supertest from "supertest";
+import {createFixtureServer, json} from "./fixtureServer.js";
 
 describe("cover page proxy", () => {
     let introspection;
@@ -20,8 +20,9 @@ describe("cover page proxy", () => {
         process.env.NAIS_TOKEN_INTROSPECTION_ENDPOINT = `${introspection.url}/introspect`;
         process.env.STS_TOKEN_URL = `${sts.url}/rest/v1/sts/token`;
         process.env.FOERSTESIDEGENERATOR_BASE_URL = generator.url;
-        app = require("../src/server");
-        ({clearStsToken} = require("../src/security/sts"));
+        process.env.PROXY_LOG_LEVEL = "warn";
+        ({default: app} = await import("../src/server.js"));
+        ({clearStsToken} = await import("../src/security/sts.js"));
     });
 
     after(async () => {
@@ -55,15 +56,21 @@ describe("cover page proxy", () => {
     it("preserves the exact trailing slash, subpath and query string", async () => {
         for (const [incoming, outgoing] of [
             ["/foersteside/", "/api/foerstesidegenerator/v1/foersteside/"],
+            ["/foersteside?name=one%20two", "/api/foerstesidegenerator/v1/foersteside?name=one%20two"],
+            ["/foersteside/?name=one%20two", "/api/foerstesidegenerator/v1/foersteside/?name=one%20two"],
             ["/foersteside/sub/path?name=one%20two&name=three", "/api/foerstesidegenerator/v1/foersteside/sub/path?name=one%20two&name=three"],
         ]) {
             await get(incoming).expect(200);
             assert.equal(generator.requests.at(-1).url, outgoing);
         }
-        assert.equal(generator.requests.length, 2);
+        assert.equal(generator.requests.length, 4);
     });
 
-    it("forwards upstream 4xx and 5xx errors and all error body chunks", async () => {
+    it("forwards upstream 4xx and 5xx errors and logs all error body chunks", async (t) => {
+        const warnings = [];
+        const errors = [];
+        t.mock.method(console, "warn", entry => warnings.push(JSON.parse(entry)));
+        t.mock.method(console, "error", entry => errors.push(JSON.parse(entry)));
         generator.respondWith((request, response) => {
             const status = request.url.includes("client") ? 400 : 503;
             response.writeHead(status, {"content-type": "application/json"});
@@ -76,12 +83,38 @@ describe("cover page proxy", () => {
             assert.equal(response.text, '{"message":"split downstream error"}');
         }
         assert.equal(generator.requests.length, 2);
+        for (const [logs, status] of [[warnings, 400], [errors, 503]]) {
+            const entry = logs.find(log => log.httpStatus === status);
+            assert.equal(entry?.proxyResponseBody, '{"message":"split downstream error"}');
+            assert.equal(entry?.url, `/api/foerstesidegenerator/v1/foersteside/${status === 400 ? "client" : "server"}`);
+        }
     });
 
-    it("handles an upstream connection failure", async () => {
+    it("handles an upstream connection failure and logs the failed response", async (t) => {
+        const errors = [];
+        t.mock.method(console, "error", entry => errors.push(JSON.parse(entry)));
         generator.respondWith((_request, _response, incoming) => incoming.socket.destroy());
         await get("/foersteside/disconnected").expect(504);
         assert.equal(generator.requests.length, 1);
+        assert.ok(errors.some(entry => entry.message.includes("ECONNRESET") && entry.message.includes("/foersteside/disconnected")));
+    });
+
+    it("forwards malformed upstream error JSON and logs the parse failure", async (t) => {
+        const warnings = [];
+        t.mock.method(console, "warn", entry => warnings.push(JSON.parse(entry)));
+        generator.respondWith((_request, response) => {
+            response.writeHead(400, {"content-type": "application/json"});
+            response.end("{broken response");
+        });
+        const response = await get("/foersteside/bad-json")
+            .parse((upstream, done) => {
+                const chunks = [];
+                upstream.on("data", chunk => chunks.push(chunk));
+                upstream.on("end", () => done(null, Buffer.concat(chunks).toString()));
+            })
+            .expect(400);
+        assert.equal(response.body, "{broken response");
+        assert.match(warnings.find(entry => entry.httpStatus === 400)?.proxyResponseBody, /Failed to parse response body/);
     });
 
     it("keeps liveness, readiness and Prometheus available without authentication", async () => {

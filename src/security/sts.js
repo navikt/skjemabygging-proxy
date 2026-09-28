@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
-const config = require("../config");
+import jwt from "jsonwebtoken";
+import config from "../config.js";
 
 const HEADER_STS_TOKEN = "StsToken";
-const {logError} = require("../utils/log");
+import {logError} from "../utils/log.js";
 
 const authorization = `Basic ${Buffer.from(
     `${config.serviceUserUsername || ""}:${config.serviceUserPassword || ""}`, "utf8"
@@ -109,7 +109,7 @@ const clearStsToken = () => {
     stsToken = undefined;
 }
 
-module.exports = {
+export {
     clearStsToken,
     getStsToken,
     stsTokenHandler,

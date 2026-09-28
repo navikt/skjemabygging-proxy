@@ -1,5 +1,5 @@
-const app = require('./server.js')
-const {logInfo} = require("./utils/log");
+import app from "./server.js";
+import {logInfo} from "./utils/log.js";
 
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || "0.0.0.0";

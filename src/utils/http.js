@@ -1,18 +1,18 @@
-const {logError, logWarn} = require("./log");
+import {logError, logWarn} from "./log.js";
 const parseResponseBody = (res, contentType = "") => {
     return new Promise((resolve) => {
-        try {
-            const chunks = [];
-            res.on("data", function (chunk) {
-                chunks.push(chunk);
-            });
-            res.on("end", function () {
-                const result = Buffer.concat(chunks).toString();
+        const chunks = [];
+        res.on("data", chunk => chunks.push(chunk));
+        res.once("end", () => {
+            const result = Buffer.concat(chunks).toString();
+            try {
                 resolve(contentType.includes("application/json") ? JSON.parse(result) : result);
-            });
-        } catch (e) {
-            resolve(`Failed to parse response body: ${e.message}`);
-        }
+            } catch (error) {
+                resolve(`Failed to parse response body: ${error.message}`);
+            }
+        });
+        res.once("error", error => resolve(`Failed to read response body: ${error.message}`));
+        res.once("close", () => resolve("Upstream response closed before completion"));
     });
 }
 
@@ -26,6 +26,4 @@ const logProxyResError = async (proxyRes, req) => {
     }
 };
 
-module.exports = {
-    logProxyResError,
-}
+export {logProxyResError};

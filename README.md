@@ -31,10 +31,17 @@ Both leave existing shell variables unchanged and use the configured `HTTP_PROXY
 `HTTPS_PROXY` and `NO_PROXY` settings for Node fetch requests.
 Use literal values in `.env`. Node does not expand `${VAR}` references or run `$(command)`.
 Tests load `test/test.env` instead of your root `.env`.
+The service and tests use native Node 24 ESM. For one-off scripts, use `import()`
+or `node --input-type=module` instead of `require()`. To preload the optional
+`.env` before static imports, use `node --import ./src/loadEnv.js src/index.js`;
+`yarn dev` already does this.
 Run `mise exec node@24 yarn@1.22 -- yarn test` to run the Node test suite.
 The HTTP tests start local servers on dynamic `127.0.0.1` ports for token
 introspection, STS and Førstesidegenerator. They do not call the configured
 external services.
+`FOERSTESIDEGENERATOR_TIMEOUT_MS` must be a positive integer. It limits both
+incoming uploads and upstream requests. Once an upload finishes, the upstream
+timeout determines how long the proxy waits for Førstesidegenerator to respond.
 The Docker entrypoint runs `node src/index.js` and uses environment variables supplied by NAIS.
 The image enables Node's environment proxy support so STS requests made with `fetch`
 continue to use the NAIS webproxy when proxy environment variables are set.

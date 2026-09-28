@@ -1,10 +1,11 @@
-const {describe, before, after, beforeEach, it} = require("node:test");
-const assert = require("node:assert/strict");
-const {execFile} = require("node:child_process");
-const http = require("node:http");
-const {promisify} = require("node:util");
-const jwt = require("jsonwebtoken");
-const {createFixtureServer, json} = require("./fixtureServer");
+import {describe, before, after, beforeEach, it} from "node:test";
+import assert from "node:assert/strict";
+import {execFile} from "node:child_process";
+import http from "node:http";
+import {promisify} from "node:util";
+import {fileURLToPath} from "node:url";
+import jwt from "jsonwebtoken";
+import {createFixtureServer, json} from "./fixtureServer.js";
 const execFileAsync = promisify(execFile);
 
 describe("STS token", () => {
@@ -15,7 +16,7 @@ describe("STS token", () => {
     before(async () => {
         sts = await createFixtureServer();
         process.env.STS_TOKEN_URL = `${sts.url}/rest/v1/sts/token?tenant=existing%20value&scope=other`;
-        ({getStsToken, clearStsToken} = require("../src/security/sts"));
+        ({getStsToken, clearStsToken} = await import("../src/security/sts.js"));
     });
 
     after(async () => sts?.close());
@@ -150,7 +151,7 @@ describe("STS token", () => {
     it("logs network failures and passes a controlled error through the handler", async (t) => {
         const logs = captureErrors(t);
         sts.respondWith((_request, response) => response.destroy());
-        const {stsTokenHandler} = require("../src/security/sts");
+        const {stsTokenHandler} = await import("../src/security/sts.js");
         const request = {headers: {}};
         let forwardedError;
         await stsTokenHandler(request, {}, error => { forwardedError = error; });
@@ -167,7 +168,7 @@ describe("STS token", () => {
         const logs = captureErrors(t);
         const offline = await createFixtureServer();
         await offline.close();
-        const config = require("../src/config");
+        const {default: config} = await import("../src/config.js");
         const previousUrl = config.stsTokenUrl;
         config.stsTokenUrl = `${offline.url}/rest/v1/sts/token`;
         t.after(() => { config.stsTokenUrl = previousUrl; });
@@ -206,9 +207,9 @@ describe("STS token", () => {
             const {stdout} = await execFileAsync(process.execPath, [
                 "--env-file=test/test.env",
                 "-e",
-                'require("./src/security/sts").getStsToken().then(console.log)',
+                'import("./src/security/sts.js").then(({getStsToken}) => getStsToken()).then(console.log)',
             ], {
-                cwd: require("node:path").join(__dirname, ".."),
+                cwd: fileURLToPath(new URL("..", import.meta.url)),
                 env: {
                     ...process.env,
                     STS_TOKEN_URL: `${offline.url}/rest/v1/sts/token`,

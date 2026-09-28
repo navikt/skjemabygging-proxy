@@ -1,4 +1,4 @@
-const http = require("node:http");
+import http from "node:http";
 
 async function createFixtureServer() {
     const requests = [];
@@ -47,4 +47,4 @@ function json(response, status, value) {
     response.end(JSON.stringify(value));
 }
 
-module.exports = {createFixtureServer, json};
+export {createFixtureServer, json};

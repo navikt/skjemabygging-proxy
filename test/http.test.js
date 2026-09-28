@@ -1,9 +1,9 @@
-const {describe, it} = require("node:test");
-const assert = require("node:assert/strict");
-const {PassThrough} = require("node:stream");
+import {describe, it} from "node:test";
+import assert from "node:assert/strict";
+import {PassThrough} from "node:stream";
 
 process.env.PROXY_LOG_LEVEL = "warn";
-const {logProxyResError} = require("../src/utils/http");
+const {logProxyResError} = await import("../src/utils/http.js");
 
 describe("proxy response logging", () => {
     for (const [status, method] of [[400, "warn"], [500, "error"]]) {
