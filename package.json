@@ -4,7 +4,7 @@
   "description": "proxy for fyllut i nais-gcp clusteret",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "node --env-file=test/test.env --test --test-timeout=35000 test/*.test.js",
     "start": "node --env-file-if-exists=.env src/index.js",
     "dev": "node --watch --import ./src/loadEnv.js src/index.js"
   },
@@ -22,8 +22,6 @@
     "prom-client": "^15.1.3"
   },
   "devDependencies": {
-    "jest": "^30.5.1",
-    "nock": "^14.0.17",
     "supertest": "^7.2.2"
   },
   "resolutions": {

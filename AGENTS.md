@@ -7,9 +7,10 @@ use Yarn, never npm:
 
 ```sh
 mise exec node@24 yarn@1.22 -- yarn install --frozen-lockfile
-mise exec node@24 yarn@1.22 -- yarn test --runInBand
+mise exec node@24 yarn@1.22 -- yarn test
 ```
 
-Jest loads environment variables from `test/test.env`. The proxy routes are
-defined in `src/proxyApi.js`, and deployment environment variables live in
-`.nais/dev-vars.yaml` and `.nais/prod-vars.yaml`.
+`node:test` loads `test/test.env` through the test script. The HTTP tests
+assign loopback fixture URLs before loading modules that capture configuration.
+The proxy routes are defined in `src/proxyApi.js`, and deployment environment
+variables live in `.nais/dev-vars.yaml` and `.nais/prod-vars.yaml`.
