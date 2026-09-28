@@ -27,7 +27,8 @@ Stop either command with Ctrl+C in its terminal. Signaling only the Yarn process
 Both commands work without `.env`; provide the required settings through your shell instead.
 Set `NODE_ENV=development` to bypass Azure authentication locally.
 `yarn start` uses `node --env-file-if-exists=.env`; `yarn dev` loads the same optional file before starting the watched application.
-Both leave existing shell variables unchanged.
+Both leave existing shell variables unchanged and use the configured `HTTP_PROXY`,
+`HTTPS_PROXY` and `NO_PROXY` settings for Node fetch requests.
 Use literal values in `.env`. Node does not expand `${VAR}` references or run `$(command)`.
 Tests load `test/test.env` instead of your root `.env`.
 Run `mise exec node@24 yarn@1.22 -- yarn test` to run the Node test suite.
@@ -35,6 +36,8 @@ The HTTP tests start local servers on dynamic `127.0.0.1` ports for token
 introspection, STS and Førstesidegenerator. They do not call the configured
 external services.
 The Docker entrypoint runs `node src/index.js` and uses environment variables supplied by NAIS.
+The image enables Node's environment proxy support so STS requests made with `fetch`
+continue to use the NAIS webproxy when proxy environment variables are set.
 
 ## Deployment
 Applikasjonen benytter seg av github actions for deployment. Bruk `manual-deployment` action for manuelle deploys. Endringer på "main" branch vil deployes til "prod-fss". 
