@@ -1,4 +1,3 @@
-require('dotenv-expand').expand(require('dotenv').config());
 const app = require('./server.js')
 const {logInfo} = require("./utils/log");
 

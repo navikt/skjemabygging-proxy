@@ -5,15 +5,13 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "nodemon src/index.js"
+    "start": "nodemon --exec \"node --env-file-if-exists=.env\" src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@elastic/ecs-morgan-format": "^1.5.1",
     "axios": "^1.20.0",
-    "dotenv": "^17.4.2",
-    "dotenv-expand": "^1000.0.0",
     "express": "^5.2.1",
     "express-correlation-id": "^3.0.1",
     "express-prom-bundle": "^8.0.0",
@@ -32,6 +30,6 @@
     "http-proxy-middleware/**/picomatch": "2.3.2"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   }
 }

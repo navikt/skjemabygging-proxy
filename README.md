@@ -8,7 +8,6 @@ Applikasjonen eksponerer ulike endepunkt og ruter forespørselen videre til appl
 
 ## Lokalkjøring
 Applikasjonen kan kjøres opp lokalt med kommandoen "yarn start", og blir da tilgjengelig på "http:localhost:3000".
-Man må opprette en .env-fil og sette NODE_ENV til development for å slippe Azure autentisering.
 
     FOERSTESIDEGENERATOR_BASE_URL=https://foerstesidegenerator-q1.dev.intern.nav.no
     FOERSTESIDEGENERATOR_TIMEOUT_MS=25000
@@ -21,6 +20,14 @@ Man må opprette en .env-fil og sette NODE_ENV til development for å slippe Azu
     NODE_ENV=development
 
 Førstesidegenerator- og STS-relaterte variabler finnes i kubernetes secrets for skjemabygging-proxy.
+
+For local development, create `.env` in the repository root and run `yarn start`.
+The file is optional; provide required settings through your shell when you do not have one.
+Set `NODE_ENV=development` to bypass Azure authentication locally.
+The start command uses `node --env-file-if-exists=.env`, which leaves existing shell variables unchanged.
+Use literal values in `.env`. Node does not expand `${VAR}` references or run `$(command)`.
+Tests load `test/test.env` instead of your root `.env`.
+The Docker entrypoint runs `node src/index.js` and uses environment variables supplied by NAIS.
 
 ## Deployment
 Applikasjonen benytter seg av github actions for deployment. Bruk `manual-deployment` action for manuelle deploys. Endringer på "main" branch vil deployes til "prod-fss". 
