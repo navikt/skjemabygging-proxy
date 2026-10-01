@@ -12,7 +12,7 @@
   "dependencies": {
     "@elastic/ecs-morgan-format": "^1.5.1",
     "axios": "^1.20.0",
-    "dotenv": "^17.4.2",
+    "dotenv": "^18.0.3",
     "dotenv-expand": "^1000.0.0",
     "express": "^5.2.1",
     "express-correlation-id": "^3.0.1",
