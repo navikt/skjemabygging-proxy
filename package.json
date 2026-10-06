@@ -2,36 +2,32 @@
   "name": "skjemabygging-proxy",
   "version": "1.0.0",
   "description": "proxy for fyllut i nais-gcp clusteret",
+  "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest --runInBand",
-    "start": "nodemon src/index.js"
+    "test": "node --env-file=test/test.env --test --test-timeout=35000 test/*.test.js",
+    "start": "node --use-env-proxy --env-file-if-exists=.env src/index.js",
+    "dev": "node --use-env-proxy --watch --import ./src/loadEnv.js src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@elastic/ecs-morgan-format": "^1.5.1",
-    "axios": "^1.20.0",
-    "dotenv": "^17.4.2",
-    "dotenv-expand": "^1000.0.0",
     "express": "^5.2.1",
     "express-correlation-id": "^3.0.1",
     "express-prom-bundle": "^8.0.0",
-    "http-proxy-middleware": "^3.0.7",
+    "http-proxy-middleware": "^4.0.0",
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.12.1",
     "prom-client": "^15.1.3"
   },
   "devDependencies": {
-    "jest": "^30.5.1",
-    "nock": "^14.0.17",
-    "nodemon": "^3.1.14",
     "supertest": "^7.2.2"
   },
   "resolutions": {
     "http-proxy-middleware/**/picomatch": "2.3.2"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   }
 }

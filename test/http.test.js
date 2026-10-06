@@ -1,42 +1,26 @@
-const {PassThrough} = require("stream");
-const {logError, logWarn} = require("../src/utils/log");
+import {describe, it} from "node:test";
+import assert from "node:assert/strict";
+import {PassThrough} from "node:stream";
 
-jest.mock("../src/utils/log", () => ({
-    logError: jest.fn(),
-    logWarn: jest.fn(),
-}));
+process.env.PROXY_LOG_LEVEL = "warn";
+const {logProxyResError} = await import("../src/utils/http.js");
 
-const {logProxyResError} = require("../src/utils/http");
-
-const logResponse = async (statusCode) => {
-    const proxyRes = new PassThrough();
-    proxyRes.statusCode = statusCode;
-    proxyRes.headers = {"content-type": "application/json"};
-    const logging = logProxyResError(proxyRes, {url: "/foersteside"});
-    proxyRes.end(JSON.stringify({message: "sanitized downstream response"}));
-    await logging;
-};
-
-beforeEach(() => jest.clearAllMocks());
-
-test("logs downstream 4xx responses as warnings", async () => {
-    await logResponse(400);
-
-    expect(logWarn).toHaveBeenCalledWith(expect.objectContaining({
-        httpStatus: 400,
-        url: "/foersteside",
-        proxyResponseBody: JSON.stringify({message: "sanitized downstream response"}),
-    }));
-    expect(logError).not.toHaveBeenCalled();
-});
-
-test("logs downstream 5xx responses as errors", async () => {
-    await logResponse(500);
-
-    expect(logError).toHaveBeenCalledWith(expect.objectContaining({
-        httpStatus: 500,
-        url: "/foersteside",
-        proxyResponseBody: JSON.stringify({message: "sanitized downstream response"}),
-    }));
-    expect(logWarn).not.toHaveBeenCalled();
+describe("proxy response logging", () => {
+    for (const [status, method] of [[400, "warn"], [500, "error"]]) {
+        it(`logs downstream ${status} responses with the complete body`, async (t) => {
+            const logs = [];
+            t.mock.method(console, method, value => logs.push(JSON.parse(value)));
+            const response = new PassThrough();
+            response.statusCode = status;
+            response.headers = {"content-type": "application/json"};
+            const logging = logProxyResError(response, {url: "/foersteside"});
+            response.write('{"message":"split ');
+            response.end('downstream error"}');
+            await logging;
+            assert.equal(logs.length, 1);
+            assert.equal(logs[0].httpStatus, status);
+            assert.equal(logs[0].url, "/foersteside");
+            assert.equal(logs[0].proxyResponseBody, '{"message":"split downstream error"}');
+        });
+    }
 });

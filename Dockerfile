@@ -1,5 +1,7 @@
 FROM node:24-alpine
 
+ENV NODE_USE_ENV_PROXY=1
+
 COPY package.json ./
 COPY yarn.lock ./
 

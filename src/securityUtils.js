@@ -1,4 +1,4 @@
-const {logDebug, logInfo, logError} = require("./utils/log");
+import {logDebug, logInfo} from "./utils/log.js";
 
 async function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization']
@@ -52,4 +52,4 @@ async function authenticateToken(req, res, next) {
     }
 }
 
-exports.authenticateToken = authenticateToken;
+export {authenticateToken};
