@@ -35,7 +35,7 @@ The service and tests use native Node 24 ESM. For one-off scripts, use `import()
 or `node --input-type=module` instead of `require()`. To preload the optional
 `.env` before static imports, use `node --import ./src/loadEnv.js src/index.js`;
 `yarn dev` already does this.
-Run `mise exec node@24 yarn@1.22 -- yarn test` to run the Node test suite.
+Run `mise exec -- yarn test` to run the Node test suite with the versions in `mise.toml`.
 The HTTP tests start local servers on dynamic `127.0.0.1` ports for token
 introspection, STS and Førstesidegenerator. They do not call the configured
 external services.
