@@ -16,6 +16,15 @@ azure:
 accessPolicy:
   inbound:
     rules:
+      - application: azure-token-generator
+        namespace: nais
+        cluster: dev-gcp
+      - application: sendinn-preprod
+        namespace: skjemadigitalisering
+        cluster: dev-gcp
+      - application: sendinn-preprod-alt
+        namespace: skjemadigitalisering
+        cluster: dev-gcp
       - application: skjemautfylling
         namespace: skjemadigitalisering
         cluster: dev-gcp
