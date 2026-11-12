@@ -1,6 +1,6 @@
 # Agent guidance
 
-Respect `mise.toml`. This repository uses Node 24.22.1 and Yarn 1.22.
+Respect `mise.toml`. This repository uses Node 24.22.3 and Yarn 1.22.
 
 Run `mise install` before installing dependencies or running commands. Always
 use Yarn, never npm:
